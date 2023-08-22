@@ -23,7 +23,7 @@ RegisterNetEvent('razed-cryptomining:server:buyCryptoMiner', function()
     local notif3 = {
         title = 'Payment Failed',
         description = 'You have insuffient funds either in your bank or cash.',
-        type = 'failed'
+        type = 'error'
     }
 
     if Player.PlayerData.money.cash >= Config.Price['Stage 1'] then
@@ -54,12 +54,13 @@ RegisterNetEvent('razed-cryptomining:server:withdrawcrypto', function()
     local notif1 = {
         title = 'Withdrawal Failed',
         description = 'You have insuffient withdrawal funds. Keep mining!',
-        type = 'failed'
+        duration = '500',
+        type = 'error'
     }
     local notif2 = {
         title = 'Withdrawal Successfull',
         description = 'The funds have been successfully withdrew! '..CryptoBalance..' coins collected.',
-        duration = 5000,
+        duration = '500',
         type = 'success'
     }
 
@@ -76,7 +77,7 @@ RegisterNetEvent('razed-cryptomining:server:withdrawcrypto', function()
     else
     TriggerClientEvent("ox_lib:notify", src, notif1)
     end
-end
+  end
 end)
 
 RegisterNetEvent('razed-cryptomining:server:switch',function(switchStatus)
