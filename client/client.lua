@@ -17,9 +17,6 @@ RegisterNetEvent('CryptoMiningMenu', function()
                 onSelect = function()
                     ToggleCryptoMiner()
                 end,
-                --metadata = {
-                --  {label = 'Miner Status', value = MinerStatus}
-                --},
             },
             {
                 title = 'Miner Status - 🟢',
@@ -52,6 +49,17 @@ RegisterNetEvent('CryptoMiningMenu', function()
                 icon = 'question',
                 metadata = {
                   {label = 'Miner Status', value = MinerStatus}
+                },
+            },
+            {
+                title = 'Withdraw',
+                description = 'Withdraw your crypto: '..Config.CryptoWithdrawalFee.. '% Fee',
+                icon = 'dollar',
+                onSelect = function()
+                    
+                end,
+                metadata = {
+                  {label = 'Withdraw Availability', value = '🟢'}
                 },
             }
       }}
