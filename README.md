@@ -1,6 +1,6 @@
 ![Untitled4](https://github.com/planeklm/razed-cryptomining/assets/91488137/81076c14-0491-4c4d-aa5d-a82589b54d04)
 
-**This is WIP project. Do not use commercially.**\
+**This is WIP project. Do not use commercially.**
 
 **Features:**
 
