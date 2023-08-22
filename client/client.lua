@@ -1,11 +1,13 @@
 local QBCore = exports['qb-core']:GetCoreObject()
 local CryptoMinerProp = Config.CryptoMinerProp
+local CryptoBalance = 0.0
 local MinerStatus = false
+
 local arg = {
     owned = false
 }
 
-RegisterNetEvent('CryptoMiningMenu', function()
+RegisterNetEvent('razed-cryptomining:client:CryptoMiningMenu', function()
     lib.registerContext({
         id = 'cryptomenuon',
         title = 'Crypto Miner Menu',
@@ -26,6 +28,15 @@ RegisterNetEvent('CryptoMiningMenu', function()
                   {label = 'Miner Status', value = MinerStatus}
                 },
             }
+            --[[{
+                title = 'Withdraw',
+                description = 'Withdraw your crypto: '..Config.CryptoWithdrawalFeeShown.. '% Fee',
+                icon = 'dollar',
+                serverEvent = 'razed-cryptomining:server:withdrawcrypto',
+                metadata = {
+                  {label = 'Currency Available', value = CryptoBalance}
+                },
+            }]]--
       }}
     )
     lib.registerContext({
@@ -53,13 +64,11 @@ RegisterNetEvent('CryptoMiningMenu', function()
             },
             {
                 title = 'Withdraw',
-                description = 'Withdraw your crypto: '..Config.CryptoWithdrawalFee.. '% Fee',
+                description = 'Withdraw your crypto: '..Config.CryptoWithdrawalFeeShown.. '% Fee',
                 icon = 'dollar',
-                onSelect = function()
-                    
-                end,
+                serverEvent = 'razed-cryptomining:server:withdrawcrypto',
                 metadata = {
-                  {label = 'Withdraw Availability', value = '🟢'}
+                  {label = 'Currency Available', value = CryptoBalance}
                 },
             }
       }}
@@ -72,7 +81,10 @@ RegisterNetEvent('CryptoMiningMenu', function()
     end
 end)
 
-RegisterNetEvent('BuyCryptoMining', function(args)
+
+
+
+RegisterNetEvent('razed-cryptomining:client:BuyCryptoMining', function(args)
     lib.registerContext({
         id = 'buycryptominer',
         title = 'Purchase Crypto Miner',
@@ -81,7 +93,7 @@ RegisterNetEvent('BuyCryptoMining', function(args)
                 title = 'Purchase',
                 description = 'Price: '..Config.Price['Stage 1'],
                 icon = 'dollar',
-                serverEvent = 'razed-cryptomining:buyCryptoMiner',
+                serverEvent = 'razed-cryptomining:server:buyCryptoMiner',
                 disabled = args.owned,
                 metadata = {
                   {label = 'Reviews:', value = '⭐⭐⭐⭐⭐/5'},
@@ -93,7 +105,7 @@ RegisterNetEvent('BuyCryptoMining', function(args)
                 title = 'Proceed To Crypto Miner Menu',
                 description = 'If you click this button, it will locate you to the main user interface for the crypto miner.',
                 icon = 'fa-brands fa-bitcoin',
-                event = 'CryptoMiningMenu',
+                event = 'razed-cryptomining:client:CryptoMiningMenu',
                 disabled = not args.owned
             }
       }}
@@ -128,27 +140,30 @@ end
 RegisterNetEvent('razed-cryptomining:client:addinfo', function(data)
     if data == nil then
         arg.owned = false
-        CLUB_OWNED = false
     else
         arg.owned = true
-        CLUB_OWNED =  true
     end
 end)
 
 function MinerStarted()
-    TriggerServerEvent('InteractSound_SV:PlayWithinDistance', 0.5, 'progressbar', 1.0)
+    TriggerServerEvent('InteractSound_SV:PlayWithinDistance', 0.5, 'progressbar', 0.5)
+        --client
+    TriggerServerEvent('razed-cryptomining:server:switch', true)
 end
 
 function MinerStopped()
-    TriggerServerEvent('InteractSound_SV:PlayWithinDistance', 0.5, 'progressbarcancel', 1.0)
-
+    TriggerServerEvent('InteractSound_SV:PlayWithinDistance', 0.5, 'progressbarcancel', 0.5)
+            --client
+    TriggerServerEvent('razed-cryptomining:server:switch', false)
 end
 
-RegisterNetEvent('CheckIfOwnedCrypto', function()
+RegisterNetEvent('razed-cryptomining:client:CheckIfOwnedCrypto', function()
     TriggerServerEvent('razed-cryptomining:server:getinfo')
     Wait(1000)
-    TriggerEvent('BuyCryptoMining', arg)
+    TriggerEvent('razed-cryptomining:client:BuyCryptoMining', arg)
 end)
+
+
 
 CreateThread(function()
     if Config.Target == 'qb' then
@@ -157,7 +172,7 @@ CreateThread(function()
             { 
                 icon = "fa-brands fa-bitcoin",
                 label = "Open Crypto Miner Menu",
-                event = "CheckIfOwnedCrypto"
+                event = "razed-cryptomining:client:CheckIfOwnedCrypto"
             },
           },
           distance = 3,
@@ -168,7 +183,7 @@ else if Config.Target == 'ox' then
             {
                 icon = "fa-brands fa-bitcoin",
                 label = "Open Crypto Miner Menu",
-                event = "CheckIfOwnedCrypto"
+                event = "razed-cryptomining:client:CheckIfOwnedCrypto"
             },
         },
         distance = 3,
