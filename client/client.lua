@@ -18,15 +18,18 @@ RegisterNetEvent('razed-cryptomining:client:CryptoMiningMenu', function()
                 icon = 'toggle-on',
                 onSelect = function()
                     ToggleCryptoMiner()
+                    if MinerStatus == true then
+                        lib.showContext('cryptomenuon')
+                    else
+                        lib.showContext('cryptomenuoff')
+                    end
                 end,
             },
             {
                 title = 'Miner Status - 🟢',
                 description = 'Hover over this button to show the status of the miner.',
                 icon = 'question',
-                metadata = {
-                  {label = 'Miner Status', value = MinerStatus}
-                },
+                image = 'https://i.imgur.com/KiBDJuX.png'
             }
             --[[{
                 title = 'Withdraw',
@@ -49,6 +52,11 @@ RegisterNetEvent('razed-cryptomining:client:CryptoMiningMenu', function()
                 icon = 'toggle-off',
                 onSelect = function()
                     ToggleCryptoMiner()
+                    if MinerStatus == true then
+                        lib.showContext('cryptomenuon')
+                    else
+                        lib.showContext('cryptomenuoff')
+                    end
                 end,
                 --metadata = {
                 --  {label = 'Miner Status', value = MinerStatus}
@@ -58,18 +66,14 @@ RegisterNetEvent('razed-cryptomining:client:CryptoMiningMenu', function()
                 title = 'Miner Status - 🔴',
                 description = 'Hover over this button to show the status of the miner.',
                 icon = 'question',
-                metadata = {
-                  {label = 'Miner Status', value = MinerStatus}
-                },
+                image = 'https://i.imgur.com/RWNejJy.png'
             },
             {
                 title = 'Withdraw',
                 description = 'Withdraw your crypto: '..Config.CryptoWithdrawalFeeShown.. '% Fee',
                 icon = 'dollar',
                 serverEvent = 'razed-cryptomining:server:withdrawcrypto',
-                metadata = {
-                  {label = 'Currency Available', value = CryptoBalance}
-                },
+                image = 'https://i.imgur.com/UJGPHfe.png'
             }
       }}
     )
@@ -118,18 +122,22 @@ function ToggleCryptoMiner()
  if MinerStatus == true then
         lib.notify({
             title = 'Stopping Miner!',
+            description = 'The miner has been stopped and now will stop mining coins.',
             type = 'error',
-            duration = 1000
+            duration = '500'
         })
+        Wait(500)
             MinerStatus = false
             print('Stopped Miner')
         MinerStopped()
     else if MinerStatus == false then
         lib.notify({
             title = 'Starting Miner!',
+            description = 'The miner has been started and now will start mining coins!',
             type = 'success',
-            duration = 1000
+            duration = '500'
         })
+        Wait(500)
             MinerStatus = true
             print('Starting Miner')
         MinerStarted()
