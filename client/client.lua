@@ -95,7 +95,7 @@ RegisterNetEvent('razed-cryptomining:client:BuyCryptoMining', function(args)
         options = {
             {
                 title = 'Purchase',
-                description = 'Price: '..Config.Price['Stage 1'],
+                description = 'Price: $'..Config.Price['Stage 1'],
                 icon = 'dollar',
                 serverEvent = 'razed-cryptomining:server:buyCryptoMiner',
                 disabled = args.owned,
