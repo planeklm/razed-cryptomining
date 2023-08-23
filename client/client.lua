@@ -13,6 +13,9 @@ RegisterNetEvent('razed-cryptomining:client:CryptoMiningMenu', function()
         title = 'Crypto Miner Menu',
         options = {
             {
+                title = 'Toggle, View the Status or Withdraw.',
+              },
+            {
                 title = 'Toggle Crypto Miner',
                 description = 'This toggles the crypto miner to start or stop.',
                 icon = 'toggle-on',
@@ -31,21 +34,15 @@ RegisterNetEvent('razed-cryptomining:client:CryptoMiningMenu', function()
                 icon = 'question',
                 image = 'https://i.imgur.com/KiBDJuX.png'
             }
-            --[[{
-                title = 'Withdraw',
-                description = 'Withdraw your crypto: '..Config.CryptoWithdrawalFeeShown.. '% Fee',
-                icon = 'dollar',
-                serverEvent = 'razed-cryptomining:server:withdrawcrypto',
-                metadata = {
-                  {label = 'Currency Available', value = CryptoBalance}
-                },
-            }]]--
       }}
     )
     lib.registerContext({
         id = 'cryptomenuoff',
         title = 'Crypto Miner Menu',
         options = {
+            {
+                title = 'Toggle, View the Status or Withdraw.',
+              },
             {
                 title = 'Toggle Crypto Miner',
                 description = 'This toggles the crypto miner to start or stop.',
@@ -58,9 +55,6 @@ RegisterNetEvent('razed-cryptomining:client:CryptoMiningMenu', function()
                         lib.showContext('cryptomenuoff')
                     end
                 end,
-                --metadata = {
-                --  {label = 'Miner Status', value = MinerStatus}
-                --},
             },
             {
                 title = 'Miner Status - 🔴',
@@ -93,6 +87,9 @@ RegisterNetEvent('razed-cryptomining:client:BuyCryptoMining', function(args)
         id = 'buycryptominer',
         title = 'Purchase Crypto Miner',
         options = {
+            {
+                title = 'Purchase or use the Crypto Miner.',
+              },
             {
                 title = 'Purchase',
                 description = 'Price: $'..Config.Price['Stage 1'],
