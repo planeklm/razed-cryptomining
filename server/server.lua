@@ -84,6 +84,10 @@ RegisterNetEvent('razed-cryptomining:server:switch',function(switchStatus)
     MinerStatus = switchStatus
 end)
 
+AddEventHandler('playerDropped', function()
+    MinerStatus = false
+end)
+
 CreateThread(function()
    while true do
         Wait(1000)
