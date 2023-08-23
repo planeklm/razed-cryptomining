@@ -100,9 +100,7 @@ RegisterNetEvent('razed-cryptomining:client:BuyCryptoMining', function(args)
                 serverEvent = 'razed-cryptomining:server:buyCryptoMiner',
                 disabled = args.owned,
                 metadata = {
-                  {label = 'Reviews:', value = '⭐⭐⭐⭐⭐/5'},
-                  {label = 'Pong Slug - ', value = 'Very good crypto miner it is pretty good I reccomend it ⛏.'},
-                  {label = 'Dogeman - ', value = 'Doge to moon pls 🐶.'}
+                  {label = 'Reviews:', value = '⭐⭐⭐⭐⭐/5'}
                 },
             },
             {
@@ -115,7 +113,6 @@ RegisterNetEvent('razed-cryptomining:client:BuyCryptoMining', function(args)
       }}
     )
     lib.showContext('buycryptominer')
-
 end)
 
 function ToggleCryptoMiner()
