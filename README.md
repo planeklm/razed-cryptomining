@@ -30,5 +30,9 @@ We have created an advanced script for qbcore framework.
 OR\
 [ox_target](https://github.com/overextended/ox_target)
 
+# Optionals
+[renewed-phone](https://github.com/Renewed-Scripts/qb-phone)\
+
+
 # Credits
 planeklm - Creating the script
