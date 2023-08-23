@@ -107,10 +107,9 @@ CreateThread(function()
    while true do
         Wait(1000)
         while MinerStatus do
-            Wait(500)
+            Wait(math.random(15000, 50000))
             CryptoBalance = CryptoBalance + math.random(1, 3)
-            Wait(500)
+            Wait(math.random(2500, 5000))
         end
     end
 end)
-
