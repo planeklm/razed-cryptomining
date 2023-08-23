@@ -183,7 +183,7 @@ CreateThread(function()
                 event = "razed-cryptomining:client:CheckIfOwnedCrypto"
             },
           },
-          distance = 3,
+          distance = 3.0,
     })
 else if Config.Target == 'ox' then
     exports.ox_target:addModel(CryptoMinerProp, {
@@ -194,7 +194,7 @@ else if Config.Target == 'ox' then
                 event = "razed-cryptomining:client:CheckIfOwnedCrypto"
             },
         },
-        distance = 3,
+        distance = 3.0,
     })
     end
   end
