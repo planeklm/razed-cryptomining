@@ -152,13 +152,11 @@ end)
 
 function MinerStarted()
     TriggerServerEvent('InteractSound_SV:PlayWithinDistance', 0.5, 'progressbar', 0.5)
-        --client
     TriggerServerEvent('razed-cryptomining:server:switch', true)
 end
 
 function MinerStopped()
     TriggerServerEvent('InteractSound_SV:PlayWithinDistance', 0.5, 'progressbarcancel', 0.5)
-            --client
     TriggerServerEvent('razed-cryptomining:server:switch', false)
 end
 
