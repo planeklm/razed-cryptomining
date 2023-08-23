@@ -81,11 +81,11 @@ if Config.Crypto == 'qb' then
     end
 end
 else if Config.Crypto == 'renewed-phone' then
-    if CryptoBalance > 0.001 then 
+    if CryptoBalance > 0.0001 then 
         exports['qb-phone']:AddCrypto(src, Config.RenewedCryptoType, CryptoBalance * Config.CryptoWithdrawalFee)
         CryptoBalance = CryptoBalance - CryptoBalance
         TriggerClientEvent("ox_lib:notify", src, notif2)
-        else if CryptoBalance < 0.001 then
+        else if CryptoBalance < 0.0001 then
             TriggerClientEvent("ox_lib:notify", src, notif1)
         else
         TriggerClientEvent("ox_lib:notify", src, notif1)
@@ -104,11 +104,13 @@ AddEventHandler('playerDropped', function()
 end)
 
 CreateThread(function()
+    local mathRandom = math.random(1, 3) / 10
+
    while true do
         Wait(1000)
         while MinerStatus do
             Wait(math.random(15000, 50000))
-            CryptoBalance = CryptoBalance + math.random(1, 3)
+            CryptoBalance = CryptoBalance + mathRandom
             Wait(math.random(2500, 5000))
         end
     end
