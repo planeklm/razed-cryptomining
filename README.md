@@ -1,4 +1,4 @@
-![Untitled4](https://github.com/planeklm/razed-cryptomining/assets/91488137/81076c14-0491-4c4d-aa5d-a82589b54d04)
+![RazedCryptoMining](https://github.com/planeklm/razed-cryptomining/assets/91488137/769d9cf1-8883-4156-94a1-a879e39c7974)
 
 **Hello FiveM community!👋**\
 We have created an advanced script for qbcore framework.
