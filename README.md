@@ -31,7 +31,7 @@ OR\
 [ox_target](https://github.com/overextended/ox_target)
 
 # Optionals
-[renewed-phone](https://github.com/Renewed-Scripts/qb-phone)\
+[renewed-phone](https://github.com/Renewed-Scripts/qb-phone)
 
 
 # Credits
