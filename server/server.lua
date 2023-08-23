@@ -50,6 +50,7 @@ RegisterNetEvent('razed-cryptomining:server:getinfo', function()
     TriggerClientEvent('razed-cryptomining:client:addinfo', src, data)
 end)
 
+
 RegisterNetEvent('razed-cryptomining:server:withdrawcrypto', function()
     local notif1 = {
         title = 'Withdrawal Failed',
@@ -59,7 +60,7 @@ RegisterNetEvent('razed-cryptomining:server:withdrawcrypto', function()
     }
     local notif2 = {
         title = 'Withdrawal Successfull',
-        description = 'The funds have been successfully withdrew! '..CryptoBalance..' coins collected.',
+        description = 'The funds have been successfully withdrew! '..CryptoBalance..' coins collected, with a '..Config.CryptoWithdrawalFeeShown..'% fee.',
         duration = '500',
         type = 'success'
     }
@@ -68,6 +69,7 @@ RegisterNetEvent('razed-cryptomining:server:withdrawcrypto', function()
     local Player = QBCore.Functions.GetPlayer(src)
     local data = getData(Player.PlayerData.citizenid)
 
+if Config.Crypto == 'qb' then
     if CryptoBalance > 0.001 then 
     Player.Functions.AddMoney('crypto', CryptoBalance * Config.CryptoWithdrawalFee)
     CryptoBalance = CryptoBalance - CryptoBalance
@@ -77,7 +79,20 @@ RegisterNetEvent('razed-cryptomining:server:withdrawcrypto', function()
     else
     TriggerClientEvent("ox_lib:notify", src, notif1)
     end
+end
+else if Config.Crypto == 'renewed-phone' then
+    if CryptoBalance > 0.001 then 
+        exports['qb-phone']:AddCrypto(src, Config.RenewedCryptoType, CryptoBalance * Config.CryptoWithdrawalFee)
+        CryptoBalance = CryptoBalance - CryptoBalance
+        TriggerClientEvent("ox_lib:notify", src, notif2)
+        else if CryptoBalance < 0.001 then
+            TriggerClientEvent("ox_lib:notify", src, notif1)
+        else
+        TriggerClientEvent("ox_lib:notify", src, notif1)
+        end
+    end
   end
+ end
 end)
 
 RegisterNetEvent('razed-cryptomining:server:switch',function(switchStatus)
@@ -92,11 +107,10 @@ CreateThread(function()
    while true do
         Wait(1000)
         while MinerStatus do
-            Wait(math.random(15000, 50000))
+            Wait(500)
             CryptoBalance = CryptoBalance + math.random(1, 3)
-            Wait(math.random(2500, 5000))
+            Wait(500)
         end
     end
 end)
-
 
