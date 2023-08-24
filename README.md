@@ -40,4 +40,5 @@ OR\
 
 # Credits
 [planeklm (KLM)](https://github.com/planeklm)\
-[LeSiiN](https://github.com/LeSiiN)
+[LeSiiN](https://github.com/LeSiiN)\
+[Markow](https://github.com/amsali22)
