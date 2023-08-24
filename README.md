@@ -34,4 +34,5 @@ OR\
 
 
 # Credits
-planeklm - Creating the script
+planeklm (KLM)\
+LeSiiN
