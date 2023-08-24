@@ -1,24 +1,20 @@
 ![RazedCryptoMining](https://github.com/planeklm/razed-cryptomining/assets/91488137/769d9cf1-8883-4156-94a1-a879e39c7974)
 
 **Hello FiveM community!👋**\
-We have created an advanced script for qbcore framework.
+We have created an crypto mining system for the qbcore framework. The overall idea for this script is that I have yet to find a free one which works.
 
-**This is WIP project. You may use commerically, however bugs or exploits may appear.**
+**This is WIP project.**
 
-**Features:**
-
-* Fully Open-Source
-* OX lib future proof
-* Customizable
-* Easy to configure
+**Key Features of this Resource:**
+* 1. 
 
 # How To Install
 * Drag and drop `razed-cryptomining`
 * In your `server.cfg` add `ensure razed-cryptomining`
-* Install the `cryptomining.sql` into your database
+* Execute the `cryptomining.sql` into your database
 
 # Recomendations From Us
-* If using `ps-housing`, we reccomend to change the price of the server rack prop to your price.
+* If using `ps-housing`, we reccomend to change the price of the server rack prop to the appropriate price of a mining rig.
 
 # Dependencies
 [qb-core](https://github.com/qbcore-framework/qb-core)\
