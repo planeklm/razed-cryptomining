@@ -29,6 +29,9 @@ OR\
 # Optionals
 [renewed-phone](https://github.com/Renewed-Scripts/qb-phone)
 
+# Script Optimization Preview
+![imagffffe](https://github.com/planeklm/razed-cryptomining/assets/91488137/ae69a460-e370-47e1-88ab-eef19a4e1e61)
+
 
 # Credits
 planeklm - Creating the script
