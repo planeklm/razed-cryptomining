@@ -6,7 +6,7 @@ We have created an crypto mining system for the qbcore framework. The overall id
 **This is WIP project.**
 
 **Key Features of this Resource:**
-* 1. 
+ 1. 
 
 # How To Install
 * Drag and drop `razed-cryptomining`
