@@ -16,6 +16,11 @@ We have created an crypto mining system for the qbcore framework. The overall id
 # Recomendations From Us
 * If using `ps-housing`, we reccomend to change the price of the server rack prop to the appropriate price of a mining rig.
 
+# Items & Images
+**❤️ to Markow (amsali22) for making this!**
+[razed-crypto-imgs](https://github.com/amsali22/razed-crypto-imgs)
+
+
 # Dependencies
 [qb-core](https://github.com/qbcore-framework/qb-core)\
 [interact-sound](https://github.com/qbcore-framework/interact-sound)\
