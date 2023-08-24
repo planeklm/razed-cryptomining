@@ -23,6 +23,7 @@ We have created an crypto mining system for the qbcore framework. The overall id
 
 # Dependencies
 [qb-core](https://github.com/qbcore-framework/qb-core)\
+[qb-crypto](https://github.com/qbcore-framework/qb-crypto)\
 [interact-sound](https://github.com/qbcore-framework/interact-sound)\
 [ox_lib](https://github.com/overextended/ox_lib)\
 [oxmysql](https://github.com/overextended/oxmysql)
