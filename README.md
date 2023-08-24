@@ -34,5 +34,5 @@ OR\
 
 
 # Credits
-planeklm (KLM)\
-LeSiiN
+[planeklm (KLM)](https://github.com/planeklm\
+[LeSiiN](https://github.com/LeSiiN)
