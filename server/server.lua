@@ -79,7 +79,6 @@ RegisterNetEvent('razed-cryptomining:server:withdrawcrypto', function()
     }
 
 if Config.Crypto == 'qb' then
-    print(row.balance)
     if row.balance > 0.001 then
     local id = MySQL.update.await('UPDATE cryptominers SET balance = ? WHERE citizenid = ?', {
         0, Player.PlayerData.citizenid
@@ -159,7 +158,6 @@ if getGPU(PlayerCitizenID,'shitgpu')  then
                     while MinerStatus do
                         Wait(math.random(12500, 40000))
                         CryptoBalance = CryptoBalance + mathRandom
-                        print(CryptoBalance)
                         local id = MySQL.update.await('UPDATE cryptominers SET balance = ? WHERE citizenid = ?', {
                             CryptoBalance, Player.PlayerData.citizenid
                         })
