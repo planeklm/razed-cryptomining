@@ -44,8 +44,6 @@ We have created an crypto mining system for the qbcore framework. The overall id
 
 ```
 
-
-
 # Dependencies
 [qb-core](https://github.com/qbcore-framework/qb-core)\
 [qb-crypto](https://github.com/qbcore-framework/qb-crypto)\
