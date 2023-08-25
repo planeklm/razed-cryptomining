@@ -122,7 +122,7 @@ RegisterNetEvent('razed-cryptomining:server:sendGPUDatabase', function(gpu)
 end
 end)
 
-RegisterNetEvent('razed-cryptomining:server:testereer', function()
+RegisterNetEvent('razed-cryptomining:server:miningSystem', function()
 local src = source
 local Player = QBCore.Functions.GetPlayer(src)
 local PlayerCitizenID = Player.PlayerData.citizenid
