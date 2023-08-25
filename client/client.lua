@@ -116,10 +116,6 @@ RegisterNetEvent('razed-cryptomining:client:BuyCryptoMining', function(args)
     lib.showContext('buycryptominer')
 end)
 
-
-
-
-
 RegisterNetEvent('razed-cryptomining:client:UpgradeCryptoMining', function()
     lib.registerContext({
         id = 'upgradecryptominer',
@@ -223,7 +219,7 @@ end)
 function MinerStarted()
     TriggerServerEvent('InteractSound_SV:PlayWithinDistance', 0.5, 'progressbar', 0.5)
     TriggerServerEvent('razed-cryptomining:server:switch', true)
-    TriggerServerEvent('razed-cryptomining:server:testereer')
+    TriggerServerEvent('razed-cryptomining:server:miningSystem')
 end
 
 function MinerStopped()
