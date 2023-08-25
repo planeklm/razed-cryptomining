@@ -56,7 +56,7 @@ OR\
 [ox_target](https://github.com/overextended/ox_target)
 
 # Optionals
-[renewed-phone](https://github.com/Renewed-Scripts/qb-phone)
+[renewed-phone](https://github.com/Renewed-Scripts/qb-phone) - Make sure to configure your settings in config.lua
 
 # Script Optimization Preview
 ![imagffffe](https://github.com/planeklm/razed-cryptomining/assets/91488137/ae69a460-e370-47e1-88ab-eef19a4e1e61)
