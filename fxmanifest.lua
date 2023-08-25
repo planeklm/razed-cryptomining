@@ -10,7 +10,8 @@ version '1.0'
 lua54 'yes'
 
 client_script {
-    'client/client.lua'
+    'client/client.lua',
+    'client/gpu.lua'
 }
 
 server_script {
