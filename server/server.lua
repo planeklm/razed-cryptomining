@@ -36,14 +36,14 @@ RegisterNetEvent('razed-cryptomining:server:buyCryptoMiner', function()
     if Player.PlayerData.money.cash >= Config.Price['Stage 1'] then
         TriggerClientEvent("ox_lib:notify", src, notif1)
         Player.Functions.RemoveMoney('cash', Config.Price['Stage 1'], "Bought Stage 1 Crypto Miner")
-        local id = MySQL.insert('INSERT INTO `cryptominers` (citizenid, card) VALUES (?, ?)',
-            { Player.PlayerData.citizenid, defaultCard  })
+        local id = MySQL.insert('INSERT INTO `cryptominers` (citizenid, card, balance) VALUES (?, ?, ?)',
+            { Player.PlayerData.citizenid, defaultCard, CryptoBalance  })
         TriggerClientEvent('razed-cryptomining:client:addinfo', src, getData(Player.PlayerData.citizenid))
     elseif Player.PlayerData.money.bank >= Config.Price['Stage 1'] then
         TriggerClientEvent("ox_lib:notify", src, notif1)
         Player.Functions.RemoveMoney('bank', Config.Price['Stage 1'], "Bought Stage 1 Crypto Miner")
-        local id = MySQL.insert('INSERT INTO `cryptominers` (citizenid, card) VALUES (?, ?)',
-        { Player.PlayerData.citizenid, defaultCard })
+        local id = MySQL.insert('INSERT INTO `cryptominers` (citizenid, card, balance) VALUES (?, ?, ?)',
+        { Player.PlayerData.citizenid, defaultCard, CryptoBalance })
         TriggerClientEvent('razed-cryptomining:client:addinfo', src, getData(Player.PlayerData.citizenid))
     else 
         TriggerClientEvent("ox_lib:notify", src, notif3)
@@ -58,6 +58,13 @@ RegisterNetEvent('razed-cryptomining:server:getinfo', function()
 end)
 
 RegisterNetEvent('razed-cryptomining:server:withdrawcrypto', function()
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    local data = getData(Player.PlayerData.citizenid)
+
+    local row = MySQL.single.await('SELECT `balance` FROM `cryptominers` WHERE `citizenid` = ?', {
+        Player.PlayerData.citizenid
+    })
     local notif1 = {
         title = 'Withdrawal Failed',
         description = 'You have insuffient withdrawal funds. Keep mining!',
@@ -66,32 +73,33 @@ RegisterNetEvent('razed-cryptomining:server:withdrawcrypto', function()
     }
     local notif2 = {
         title = 'Withdrawal Successfull',
-        description = 'The funds have been successfully withdrew! '..CryptoBalance..' coins collected, with a '..Config.CryptoWithdrawalFeeShown..'% fee.',
+        description = 'The funds have been successfully withdrew! '..row.balance..' coins collected, with a '..Config.CryptoWithdrawalFeeShown..'% fee.',
         duration = '500',
         type = 'success'
     }
 
-    local src = source
-    local Player = QBCore.Functions.GetPlayer(src)
-    local data = getData(Player.PlayerData.citizenid)
-
 if Config.Crypto == 'qb' then
-    if CryptoBalance > 0.001 then 
-    Player.Functions.AddMoney('crypto', CryptoBalance * Config.CryptoWithdrawalFee)
-    CryptoBalance = CryptoBalance - CryptoBalance
+    print(row.balance)
+    if row.balance > 0.001 then
+    local id = MySQL.update.await('UPDATE cryptominers SET balance = ? WHERE citizenid = ?', {
+        0, Player.PlayerData.citizenid
+    })
+    Player.Functions.AddMoney('crypto', row.balance * Config.CryptoWithdrawalFee)
     TriggerClientEvent("ox_lib:notify", src, notif2)
-    else if CryptoBalance < 0.001 then
+    else if row.balance < 0.001 then
         TriggerClientEvent("ox_lib:notify", src, notif1)
     else
     TriggerClientEvent("ox_lib:notify", src, notif1)
     end
 end
 else if Config.Crypto == 'renewed-phone' then
-    if CryptoBalance > 0.01 then 
-        exports['qb-phone']:AddCrypto(src, Config.RenewedCryptoType, CryptoBalance * Config.CryptoWithdrawalFee)
-        CryptoBalance = CryptoBalance - CryptoBalance
-        TriggerClientEvent("ox_lib:notify", src, notif2)
-        else if CryptoBalance < 0.0001 then
+    if row.balance > 0.01 then 
+        exports['qb-phone']:AddCrypto(src, Config.RenewedCryptoType, row.balance * Config.CryptoWithdrawalFee)
+        row.balance = row.balance - row.balance
+        local id = MySQL.update.await('UPDATE cryptominers SET balance = ? WHERE citizenid = ?', {
+            0, Player.PlayerData.citizenid
+        })        TriggerClientEvent("ox_lib:notify", src, notif2)
+        else if row.balance < 0.0001 then
             TriggerClientEvent("ox_lib:notify", src, notif1)
         else
         TriggerClientEvent("ox_lib:notify", src, notif1)
@@ -135,7 +143,13 @@ if getGPU(PlayerCitizenID,'shitgpu')  then
             while MinerStatus do
                 Wait(math.random(15000, 50000))
                 CryptoBalance = CryptoBalance + mathRandom
+                local id = MySQL.update.await('UPDATE cryptominers SET balance = ? WHERE citizenid = ?', {
+                    CryptoBalance, Player.PlayerData.citizenid
+                })
                 Wait(math.random(2500, 10000))
+                if false then
+                    break
+                end
             end
         end
     else if getGPU(PlayerCitizenID, '1050gpu') then
@@ -145,7 +159,14 @@ if getGPU(PlayerCitizenID,'shitgpu')  then
                     while MinerStatus do
                         Wait(math.random(12500, 40000))
                         CryptoBalance = CryptoBalance + mathRandom
+                        print(CryptoBalance)
+                        local id = MySQL.update.await('UPDATE cryptominers SET balance = ? WHERE citizenid = ?', {
+                            CryptoBalance, Player.PlayerData.citizenid
+                        })
                         Wait(math.random(1500, 8000))
+                        if false then
+                            break
+                        end
                     end
                 end
             else if getGPU(PlayerCitizenID, '1060gpu') then
@@ -155,7 +176,13 @@ if getGPU(PlayerCitizenID,'shitgpu')  then
                         while MinerStatus do
                             Wait(math.random(10000, 35000))
                             CryptoBalance = CryptoBalance + mathRandom
+                            local id = MySQL.update.await('UPDATE cryptominers SET balance = ? WHERE citizenid = ?', {
+                                CryptoBalance, Player.PlayerData.citizenid
+                            })
                             Wait(math.random(1500, 8000))
+                            if false then
+                                break
+                            end
                         end
                     end
                 else if getGPU(PlayerCitizenID, '1080gpu') then
@@ -165,7 +192,13 @@ if getGPU(PlayerCitizenID,'shitgpu')  then
                             while MinerStatus do
                                 Wait(math.random(8000, 30000))
                                 CryptoBalance = CryptoBalance + mathRandom
+                                local id = MySQL.update.await('UPDATE cryptominers SET balance = ? WHERE citizenid = ?', {
+                                    CryptoBalance, Player.PlayerData.citizenid
+                                })
                                 Wait(math.random(1000, 6500))
+                                if false then
+                                    break
+                                end
                             end
                         end
                     else if getGPU(PlayerCitizenID, '2080gpu') then
@@ -175,7 +208,13 @@ if getGPU(PlayerCitizenID,'shitgpu')  then
                                 while MinerStatus do
                                     Wait(math.random(7500, 27500))
                                     CryptoBalance = CryptoBalance + mathRandom
+                                    local id = MySQL.update.await('UPDATE cryptominers SET balance = ? WHERE citizenid = ?', {
+                                        CryptoBalance, Player.PlayerData.citizenid
+                                    })
                                     Wait(math.random(800, 4500))
+                                    if false then
+                                        break
+                                    end
                                 end
                             end
                     else if getGPU(PlayerCitizenID, '3060gpu') then
@@ -185,7 +224,13 @@ if getGPU(PlayerCitizenID,'shitgpu')  then
                                 while MinerStatus do
                                     Wait(math.random(5500, 20500))
                                     CryptoBalance = CryptoBalance + mathRandom
+                                    local id = MySQL.update.await('UPDATE cryptominers SET balance = ? WHERE citizenid = ?', {
+                                        CryptoBalance, Player.PlayerData.citizenid
+                                    })
                                     Wait(math.random(600, 2500))
+                                    if false then
+                                        break
+                                    end
                                 end
                             end
                 else if getGPU(PlayerCitizenID, '4090gpu') then
@@ -195,7 +240,13 @@ if getGPU(PlayerCitizenID,'shitgpu')  then
                             while MinerStatus do
                                 Wait(math.random(2500, 18500))
                                 CryptoBalance = CryptoBalance + mathRandom
+                                local id = MySQL.update.await('UPDATE cryptominers SET balance = ? WHERE citizenid = ?', {
+                                    CryptoBalance, Player.PlayerData.citizenid
+                                })
                                 Wait(math.random(300, 1500))
+                                if false then
+                                    break
+                                end
                             end
                         end
                     end
