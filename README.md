@@ -46,17 +46,17 @@ We have created an crypto mining system for the qbcore framework. The overall id
 
 # Dependencies
 [qb-core](https://github.com/qbcore-framework/qb-core)\
-[qb-crypto](https://github.com/qbcore-framework/qb-crypto)\
 [interact-sound](https://github.com/qbcore-framework/interact-sound)\
 [ox_lib](https://github.com/overextended/ox_lib)\
 [oxmysql](https://github.com/overextended/oxmysql)
 
-[qb-target](https://github.com/qbcore-framework/qb-target)\
-OR\
-[ox_target](https://github.com/overextended/ox_target)
-
-# Optionals
+[qb-crypto](https://github.com/qbcore-framework/qb-crypto)\
+**or**\
 [renewed-phone](https://github.com/Renewed-Scripts/qb-phone) - Make sure to configure your settings in config.lua
+
+[qb-target](https://github.com/qbcore-framework/qb-target)\
+**or**\
+[ox_target](https://github.com/overextended/ox_target)
 
 # Script Optimization Preview
 ![imagffffe](https://github.com/planeklm/razed-cryptomining/assets/91488137/ae69a460-e370-47e1-88ab-eef19a4e1e61)
