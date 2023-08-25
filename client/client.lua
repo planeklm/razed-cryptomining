@@ -79,16 +79,13 @@ RegisterNetEvent('razed-cryptomining:client:CryptoMiningMenu', function()
     end
 end)
 
-
-
-
 RegisterNetEvent('razed-cryptomining:client:BuyCryptoMining', function(args)
     lib.registerContext({
         id = 'buycryptominer',
         title = 'Purchase Crypto Miner',
         options = {
             {
-                title = 'Purchase or use the Crypto Miner.',
+                title = 'Purchase, Upgrade or use the Crypto Miner.',
               },
             {
                 title = 'Purchase',
@@ -106,10 +103,86 @@ RegisterNetEvent('razed-cryptomining:client:BuyCryptoMining', function(args)
                 icon = 'fa-brands fa-bitcoin',
                 event = 'razed-cryptomining:client:CryptoMiningMenu',
                 disabled = not args.owned
+            },
+            {
+                title = 'Upgrade Mining Rig',
+                description = 'If you click this button, it will locate you to the upgrade menu.',
+                icon = 'fa-solid fa-sim-card',
+                event = 'razed-cryptomining:client:UpgradeCryptoMining',
+                disabled = not args.owned
             }
       }}
     )
     lib.showContext('buycryptominer')
+end)
+
+
+
+
+
+RegisterNetEvent('razed-cryptomining:client:UpgradeCryptoMining', function()
+    lib.registerContext({
+        id = 'upgradecryptominer',
+        title = 'Upgrade Crypto Miner',
+        options = {
+            {
+                title = 'Got the GPU? Upgrade it here!',
+              },
+              {
+                title = 'Current GPU:',
+              },
+            {
+                title = 'GTX 480',
+                description = 'The default gpu... We will just say its a classic...',
+                icon = 'fa-solid fa-question',
+                event = 'razed-cryptomining:client:useGTX480',
+                disabled = CheckGTX480()
+            },
+            {
+                title = 'GTX 1050',
+                description = 'The second gpu. It is alright, but still quite slow.',
+                icon = 'fa-solid fa-1',
+                event = 'razed-cryptomining:client:useGTX1050',
+                disabled = CheckGTX1050()
+            },
+            {
+                title = 'GTX 1060',
+                description = 'The third gpu. Its +10 from the last so it has to be good right?',
+                icon = 'fa-solid fa-2',
+                event = 'razed-cryptomining:client:useGTX1060',
+                disabled = CheckGTX1060()
+            },
+            {
+                title = 'GTX 1080',
+                description = 'The fourth best gpu. An absolute classic!',
+                icon = 'fa-solid fa-3',
+                event = 'razed-cryptomining:client:useGTX1080',
+                disabled = CheckGTX1080()
+            },
+            {
+                title = 'RTX 2080',
+                description = 'The 3nd best gpu. Was good a few years ago, but still great.',
+                icon = 'fa-solid fa-4',
+                event = 'razed-cryptomining:client:useRTX2080',
+                disabled = CheckRTX2080()
+            },
+            {
+                title = 'RTX 3060',
+                description = 'The 2nd best gpu. The best gpu for price to preformance, but still not the best.',
+                icon = 'fa-solid fa-5',
+                event = 'razed-cryptomining:client:useRTX3060',
+                disabled = CheckRTX3060()
+            },
+            {
+                title = 'RTX 4090',
+                description = 'The best of the best. An absolute tank, no need for another upgrade.',
+                icon = 'fa-solid fa-6',
+                event = 'razed-cryptomining:client:useRTX4090',
+                disabled = CheckRTX4090()
+            }
+      }}
+    )
+    lib.showContext('upgradecryptominer')
 end)
 
 function ToggleCryptoMiner()
@@ -150,6 +223,7 @@ end)
 function MinerStarted()
     TriggerServerEvent('InteractSound_SV:PlayWithinDistance', 0.5, 'progressbar', 0.5)
     TriggerServerEvent('razed-cryptomining:server:switch', true)
+    TriggerServerEvent('razed-cryptomining:server:testereer')
 end
 
 function MinerStopped()
@@ -159,11 +233,9 @@ end
 
 RegisterNetEvent('razed-cryptomining:client:CheckIfOwnedCrypto', function()
     TriggerServerEvent('razed-cryptomining:server:getinfo')
-    Wait(1000)
+    Wait(500)
     TriggerEvent('razed-cryptomining:client:BuyCryptoMining', arg)
 end)
-
-
 
 CreateThread(function()
     if Config.Target == 'qb' then
