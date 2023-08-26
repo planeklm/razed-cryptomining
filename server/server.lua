@@ -1,5 +1,6 @@
 local QBCore = exports['qb-core']:GetCoreObject()
 local CryptoBalance = 0.0
+local durabilityAmount = 0
 local MinerStatus = false
 local defaultCard = 'shitgpu'
 
@@ -116,12 +117,115 @@ AddEventHandler('playerDropped', function()
     MinerStatus = false
 end)
 
+QBCore.Functions.CreateCallback('razed-cryptomining:server:getGPUIDK', function(source, cb)
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    local PlayerCitizenID = Player.PlayerData.citizenid
+    local GPUType1 = nil
+    
+    if getGPU(PlayerCitizenID, '1080gpu') then
+        GPUType1 = true
+        print('Work')
+    else if getGPU(PlayerCitizenID, '1050gpu') then
+        GPUType1 = false
+        print('false')
+    else if getGPU(PlayerCitizenID, '1060gpu') then
+        GPUType1 = false
+        print('false')
+    else if getGPU(PlayerCitizenID, '1080gpu') then
+        GPUType1 = false
+        print('false')
+    else if getGPU(PlayerCitizenID, '2080gpu') then
+        GPUType1 = false
+        print('false')
+    else if getGPU(PlayerCitizenID, '3060gpu') then
+        GPUType1 = false
+        print('false')
+    else if getGPU(PlayerCitizenID, '4090gpu') then
+        GPUType1 = false
+        print('false')
+    else if getGPU(PlayerCitizenID, 'shitgpu') then
+        GPUType1 = false
+        print('false')
+    end
+    cb(GPUType1)
+end
+end
+end
+end
+end
+end
+end
+end)
+
+QBCore.Functions.CreateCallback('razed-cryptomining:server:showGPU', function(source, cb)
+local src = source
+local Player = QBCore.Functions.GetPlayer(src)
+local PlayerCitizenID = Player.PlayerData.citizenid
+local GPUType = 'Unkown'
+
+if getGPU(PlayerCitizenID, 'shitgpu') then
+    GPUType = "GTX 480"
+    else if getGPU(PlayerCitizenID, '1050gpu') then
+        GPUType = "GTX 1050"
+        else if getGPU(PlayerCitizenID, '1060gpu') then
+            GPUType = "GTX 1060"
+            else if getGPU(PlayerCitizenID, '1080gpu') then
+                GPUType = "GTX 1080"
+                else if getGPU(PlayerCitizenID, '2080gpu') then
+                    GPUType = "RTX 2080"
+                    else if getGPU(PlayerCitizenID, '3060gpu') then
+                        GPUType = "RTX 3060"
+                        else if getGPU(PlayerCitizenID, '4090gpu') then
+                            GPUType = "RTX 4090"
+                        end
+                        end
+                    end
+                end
+            end
+        end
+    end
+cb(GPUType)
+end)
+
+QBCore.Functions.CreateCallback('razed-cryptomining:server:checkGPUImage', function(source, cb)
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    local PlayerCitizenID = Player.PlayerData.citizenid
+    local image = 'Unkown'
+
+    if getGPU(PlayerCitizenID, 'shitgpu') then
+        GPUType = "https://i.imgur.com/UFEWLG0.png"
+        else if getGPU(PlayerCitizenID, '1050gpu') then
+            GPUType = "https://i.imgur.com/Gyml2VP.png"
+            else if getGPU(PlayerCitizenID, '1060gpu') then
+                GPUType = "https://i.imgur.com/O10IWVC.png"
+                else if getGPU(PlayerCitizenID, '1080gpu') then
+                    GPUType = "https://i.imgur.com/gwQzyHX.png"
+                    else if getGPU(PlayerCitizenID, '2080gpu') then
+                        GPUType = "https://i.imgur.com/qJ376Ca.png"
+                        else if getGPU(PlayerCitizenID, '3060gpu') then
+                            GPUType = "https://i.imgur.com/OtquIm1.png"
+                            else if getGPU(PlayerCitizenID, '4090gpu') then
+                                GPUType = "https://i.imgur.com/fM9V5jn.png"
+                            end
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    cb(image)
+end)
+
 RegisterNetEvent('razed-cryptomining:server:sendGPUDatabase', function(gpu)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
+    local PlayerCitizenID = Player.PlayerData.citizenid
+
     if gpu == nil then
         print('Attempted!')
-    else
+        else
     local id = MySQL.update.await('UPDATE cryptominers SET card = ? WHERE citizenid = ?', {
         gpu, Player.PlayerData.citizenid
     })
