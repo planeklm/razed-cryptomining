@@ -117,6 +117,9 @@ RegisterNetEvent('razed-cryptomining:client:BuyCryptoMining', function(args)
 end)
 
 RegisterNetEvent('razed-cryptomining:client:UpgradeCryptoMining', function()
+    QBCore.Functions.TriggerCallback('razed-cryptomining:server:showGPU', function(GPUType)
+    QBCore.Functions.TriggerCallback('razed-cryptomining:server:checkGPUImage', function(image)
+
     lib.registerContext({
         id = 'upgradecryptominer',
         title = 'Upgrade Crypto Miner',
@@ -125,13 +128,15 @@ RegisterNetEvent('razed-cryptomining:client:UpgradeCryptoMining', function()
                 title = 'Got the GPU? Upgrade it here!',
               },
               {
-                title = 'Current GPU:',
+                title = 'Current GPU: '..GPUType,
+                image = image
               },
             {
                 title = 'GTX 480',
                 description = 'The default gpu... We will just say its a classic...',
                 icon = 'fa-solid fa-question',
                 event = 'razed-cryptomining:client:useGTX480',
+                image = 'https://i.imgur.com/UFEWLG0.png',
                 disabled = CheckGTX480()
             },
             {
@@ -139,6 +144,7 @@ RegisterNetEvent('razed-cryptomining:client:UpgradeCryptoMining', function()
                 description = 'The second gpu. It is alright, but still quite slow.',
                 icon = 'fa-solid fa-1',
                 event = 'razed-cryptomining:client:useGTX1050',
+                image = 'https://i.imgur.com/Gyml2VP.png',
                 disabled = CheckGTX1050()
             },
             {
@@ -146,6 +152,7 @@ RegisterNetEvent('razed-cryptomining:client:UpgradeCryptoMining', function()
                 description = 'The third gpu. Its +10 from the last so it has to be good right?',
                 icon = 'fa-solid fa-2',
                 event = 'razed-cryptomining:client:useGTX1060',
+                image = 'https://i.imgur.com/O10IWVC.png',
                 disabled = CheckGTX1060()
             },
             {
@@ -153,6 +160,7 @@ RegisterNetEvent('razed-cryptomining:client:UpgradeCryptoMining', function()
                 description = 'The fourth best gpu. An absolute classic!',
                 icon = 'fa-solid fa-3',
                 event = 'razed-cryptomining:client:useGTX1080',
+                image = 'https://i.imgur.com/gwQzyHX.png',
                 disabled = CheckGTX1080()
             },
             {
@@ -160,6 +168,7 @@ RegisterNetEvent('razed-cryptomining:client:UpgradeCryptoMining', function()
                 description = 'The 3nd best gpu. Was good a few years ago, but still great.',
                 icon = 'fa-solid fa-4',
                 event = 'razed-cryptomining:client:useRTX2080',
+                image = 'https://i.imgur.com/qJ376Ca.png',
                 disabled = CheckRTX2080()
             },
             {
@@ -167,6 +176,7 @@ RegisterNetEvent('razed-cryptomining:client:UpgradeCryptoMining', function()
                 description = 'The 2nd best gpu. The best gpu for price to preformance, but still not the best.',
                 icon = 'fa-solid fa-5',
                 event = 'razed-cryptomining:client:useRTX3060',
+                image = 'https://i.imgur.com/OtquIm1.png',
                 disabled = CheckRTX3060()
             },
             {
@@ -174,11 +184,14 @@ RegisterNetEvent('razed-cryptomining:client:UpgradeCryptoMining', function()
                 description = 'The best of the best. An absolute tank, no need for another upgrade.',
                 icon = 'fa-solid fa-6',
                 event = 'razed-cryptomining:client:useRTX4090',
+                image = 'https://i.imgur.com/fM9V5jn.png',
                 disabled = CheckRTX4090()
             }
       }}
     )
     lib.showContext('upgradecryptominer')
+end)
+end)
 end)
 
 function ToggleCryptoMiner()
