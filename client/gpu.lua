@@ -127,7 +127,7 @@ RegisterNetEvent('razed-cryptomining:client:useGTX1050', function()
         type = 'error'
     }
 
-    local success = lib.skillCheck({'easy', 'easy', {areaSize = 60, speedMultiplier = 2}, 'easy'}, {'1', '2', '3', '4'})
+    local success = lib.skillCheck({'easy', 'easy', {areaSize = 60, speedMultiplier = 1.5}, 'easy'}, {'1', '2', '3', '4'})
 
     if success == true then
     ExecuteCommand("e mechanic")
@@ -177,7 +177,7 @@ RegisterNetEvent('razed-cryptomining:client:useGTX1060', function()
         type = 'error'
     }
 
-    local success = lib.skillCheck({'easy', 'easy', {areaSize = 60, speedMultiplier = 2}, 'easy'}, {'1', '2', '3', '4'})
+    local success = lib.skillCheck({'easy', 'easy', {areaSize = 60, speedMultiplier = 1.75}, 'easy'}, {'1', '2', '3', '4'})
 
     if success == true then
     ExecuteCommand("e mechanic")
@@ -277,7 +277,7 @@ RegisterNetEvent('razed-cryptomining:client:useRTX2080', function()
         type = 'error'
     }
 
-    local success = lib.skillCheck({'easy', 'easy', {areaSize = 60, speedMultiplier = 2}, 'medium'}, {'1', '2', '3', '4'})
+    local success = lib.skillCheck({'easy', 'easy', {areaSize = 60, speedMultiplier = 2.25}, 'medium'}, {'1', '2', '3', '4'})
 
     if success == true then
     ExecuteCommand("e mechanic")
@@ -327,7 +327,7 @@ RegisterNetEvent('razed-cryptomining:client:useRTX3060', function()
         type = 'error'
     }
 
-    local success = lib.skillCheck({'easy', 'medium', {areaSize = 60, speedMultiplier = 2}, 'medium'}, {'1', '2', '3', '4'})
+    local success = lib.skillCheck({'easy', 'medium', {areaSize = 60, speedMultiplier = 2.5}, 'medium'}, {'1', '2', '3', '4'})
 
     if success == true then
     ExecuteCommand("e mechanic")
@@ -377,7 +377,7 @@ RegisterNetEvent('razed-cryptomining:client:useRTX4090', function()
         type = 'error'
     }
 
-    local success = lib.skillCheck({'easy', 'medium', {areaSize = 60, speedMultiplier = 2}, 'hard'}, {'1', '2', '3', '4'})
+    local success = lib.skillCheck({'easy', 'medium', {areaSize = 60, speedMultiplier = 3}, 'hard'}, {'1', '2', '3', '4'})
 
     if success == true then
     ExecuteCommand("e mechanic")
@@ -405,4 +405,3 @@ else
     TriggerEvent("ox_lib:notify", notif3)
 end
 end)
-
