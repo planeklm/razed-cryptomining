@@ -117,47 +117,6 @@ AddEventHandler('playerDropped', function()
     MinerStatus = false
 end)
 
-QBCore.Functions.CreateCallback('razed-cryptomining:server:getGPUIDK', function(source, cb)
-    local src = source
-    local Player = QBCore.Functions.GetPlayer(src)
-    local PlayerCitizenID = Player.PlayerData.citizenid
-    local GPUType1 = nil
-    
-    if getGPU(PlayerCitizenID, '1080gpu') then
-        GPUType1 = true
-        print('Work')
-    else if getGPU(PlayerCitizenID, '1050gpu') then
-        GPUType1 = false
-        print('false')
-    else if getGPU(PlayerCitizenID, '1060gpu') then
-        GPUType1 = false
-        print('false')
-    else if getGPU(PlayerCitizenID, '1080gpu') then
-        GPUType1 = false
-        print('false')
-    else if getGPU(PlayerCitizenID, '2080gpu') then
-        GPUType1 = false
-        print('false')
-    else if getGPU(PlayerCitizenID, '3060gpu') then
-        GPUType1 = false
-        print('false')
-    else if getGPU(PlayerCitizenID, '4090gpu') then
-        GPUType1 = false
-        print('false')
-    else if getGPU(PlayerCitizenID, 'shitgpu') then
-        GPUType1 = false
-        print('false')
-    end
-    cb(GPUType1)
-end
-end
-end
-end
-end
-end
-end
-end)
-
 QBCore.Functions.CreateCallback('razed-cryptomining:server:showGPU', function(source, cb)
 local src = source
 local Player = QBCore.Functions.GetPlayer(src)
