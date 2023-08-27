@@ -246,6 +246,22 @@ RegisterNetEvent('razed-cryptomining:client:CheckIfOwnedCrypto', function()
     TriggerEvent('razed-cryptomining:client:BuyCryptoMining', arg)
 end)
 
+RegisterNetEvent('razed-cryptomining:client:sendMail', function()
+    TriggerServerEvent('qb-phone:server:sendNewMail', {
+        sender = Config.PurchaseEmailSender,
+        subject = Config.PurchaseEmailSubject,
+        message = Config.PurchaseEmailText,
+    })
+end)
+
+RegisterNetEvent('razed-cryptomining:client:sendGPUMail', function()
+    TriggerServerEvent('qb-phone:server:sendNewMail', {
+        sender = Config.gpuEmailSender,
+        subject = Config.gpuEmailSubject,
+        message = Config.gpuEmailText,
+    })
+end)
+
 CreateThread(function()
     if Config.Target == 'qb' then
     exports['qb-target']:AddTargetModel(CryptoMinerProp, {
