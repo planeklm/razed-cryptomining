@@ -299,7 +299,6 @@ if getGPU(PlayerCitizenID,'shitgpu')  then
                                 local id = MySQL.update.await('UPDATE cryptominers SET balance = ? WHERE citizenid = ?', {
                                     CryptoBalance, Player.PlayerData.citizenid
                                 })
-                                print(CryptoBalance)
                                 Wait(math.random(300, 1500))
                                 if false then
                                     break
