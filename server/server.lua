@@ -36,14 +36,14 @@ RegisterNetEvent('razed-cryptomining:server:buyCryptoMiner', function()
 
     if Player.PlayerData.money.cash >= Config.Price['Stage 1'] then
         TriggerClientEvent("ox_lib:notify", src, notif1)
-        TriggerClientEvent('razed-cryptomining:client:sendMail')
+        TriggerClientEvent('razed-cryptomining:client:sendMail', src)
         Player.Functions.RemoveMoney('cash', Config.Price['Stage 1'], "Bought Stage 1 Crypto Miner")
         local id = MySQL.insert('INSERT INTO `cryptominers` (citizenid, card, balance) VALUES (?, ?, ?)',
             { Player.PlayerData.citizenid, defaultCard, CryptoBalance  })
         TriggerClientEvent('razed-cryptomining:client:addinfo', src, getData(Player.PlayerData.citizenid))
     elseif Player.PlayerData.money.bank >= Config.Price['Stage 1'] then
         TriggerClientEvent("ox_lib:notify", src, notif1)
-        TriggerClientEvent('razed-cryptomining:client:sendMail')
+        TriggerClientEvent('razed-cryptomining:client:sendMail', src)
         Player.Functions.RemoveMoney('bank', Config.Price['Stage 1'], "Bought Stage 1 Crypto Miner")
         local id = MySQL.insert('INSERT INTO `cryptominers` (citizenid, card, balance) VALUES (?, ?, ?)',
         { Player.PlayerData.citizenid, defaultCard, CryptoBalance })
@@ -191,7 +191,7 @@ RegisterNetEvent('razed-cryptomining:server:sendGPUDatabase', function(gpu)
         gpu, Player.PlayerData.citizenid
     })
     Player.Functions.RemoveItem(gpu, 1)
-    TriggerClientEvent('razed-cryptomining:client:sendGPUMail')
+    TriggerClientEvent('razed-cryptomining:client:sendGPUMail', src)
 end
 end)
 
