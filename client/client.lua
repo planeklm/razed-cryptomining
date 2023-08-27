@@ -33,6 +33,12 @@ RegisterNetEvent('razed-cryptomining:client:CryptoMiningMenu', function()
                 description = 'Hover over this button to show the status of the miner.',
                 icon = 'question',
                 image = 'https://i.imgur.com/KiBDJuX.png'
+            },
+            {
+                title = 'Go Back',
+                description = 'Go back to the main menu.',
+                icon = 'arrow-left',
+                event = 'razed-cryptomining:client:CheckIfOwnedCrypto'
             }
       }}
     )
@@ -68,7 +74,13 @@ RegisterNetEvent('razed-cryptomining:client:CryptoMiningMenu', function()
                 icon = 'dollar',
                 serverEvent = 'razed-cryptomining:server:withdrawcrypto',
                 image = 'https://i.imgur.com/UJGPHfe.png'
-            }
+            },
+            {
+                title = 'Go Back',
+                description = 'Go back to the main menu.',
+                icon = 'arrow-left',
+                event = 'razed-cryptomining:client:CheckIfOwnedCrypto'
+            },
       }}
     )
 
@@ -126,11 +138,17 @@ RegisterNetEvent('razed-cryptomining:client:UpgradeCryptoMining', function()
         options = {
             {
                 title = 'Got the GPU? Upgrade it here!',
-              },
-              {
+            },
+            {
                 title = 'Current GPU: '..GPUType,
                 image = image
-              },
+            },
+            {
+                title = 'Go Back',
+                description = 'Go back to the main menu.',
+                icon = 'arrow-left',
+                event = 'razed-cryptomining:client:CheckIfOwnedCrypto'
+            },
             {
                 title = 'GTX 480',
                 description = 'The default gpu... We will just say its a classic...',
