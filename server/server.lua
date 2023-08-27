@@ -156,19 +156,19 @@ QBCore.Functions.CreateCallback('razed-cryptomining:server:checkGPUImage', funct
     local image = 'Unkown'
 
     if getGPU(PlayerCitizenID, 'shitgpu') then
-        GPUType = "https://i.imgur.com/UFEWLG0.png"
+        image = "https://i.imgur.com/UFEWLG0.png"
         else if getGPU(PlayerCitizenID, '1050gpu') then
-            GPUType = "https://i.imgur.com/Gyml2VP.png"
+            image = "https://i.imgur.com/Gyml2VP.png"
             else if getGPU(PlayerCitizenID, '1060gpu') then
-                GPUType = "https://i.imgur.com/O10IWVC.png"
+                image = "https://i.imgur.com/O10IWVC.png"
                 else if getGPU(PlayerCitizenID, '1080gpu') then
-                    GPUType = "https://i.imgur.com/gwQzyHX.png"
+                    image = "https://i.imgur.com/gwQzyHX.png"
                     else if getGPU(PlayerCitizenID, '2080gpu') then
-                        GPUType = "https://i.imgur.com/qJ376Ca.png"
+                        image = "https://i.imgur.com/qJ376Ca.png"
                         else if getGPU(PlayerCitizenID, '3060gpu') then
-                            GPUType = "https://i.imgur.com/OtquIm1.png"
+                            image = "https://i.imgur.com/OtquIm1.png"
                             else if getGPU(PlayerCitizenID, '4090gpu') then
-                                GPUType = "https://i.imgur.com/fM9V5jn.png"
+                                image = "https://i.imgur.com/fM9V5jn.png"
                             end
                             end
                         end
