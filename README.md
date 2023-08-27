@@ -58,6 +58,10 @@ We have created an crypto mining system for the qbcore framework. The overall id
 **or**\
 [ox_target](https://github.com/overextended/ox_target)
 
+# Optionals
+[ran-minigames](https://github.com/RanDXDev/ran-minigames) -- Thanks for making this RanDXD ❤️\
+[renewed-phone](https://github.com/Renewed-Scripts/qb-phone)
+
 # Script Optimization Preview
 ![imagffffe](https://github.com/planeklm/razed-cryptomining/assets/91488137/ae69a460-e370-47e1-88ab-eef19a4e1e61)
 
