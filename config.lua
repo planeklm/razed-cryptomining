@@ -14,6 +14,14 @@ Config.Target = 'qb' -- 'qb' or 'ox' depending on the target you use
 Config.Crypto = 'qb' -- 'qb' or 'renewed-phone' depending on the crypto resource you use
 Config.RenewedCryptoType = "gne" -- "gne" or "shung" or "xcoin" or "lme" - only change if using renewed phone
 
+Config.PurchaseEmailSender = 'Jonathan Sanders'
+Config.PurchaseEmailSubject = 'New Crypto Miner'
+Config.PurchaseEmailText = 'Congrats on the crypto miner. Want some info? The default GTX 480 is very slow, I reccomend to install a newer and more powerfull graphics card for faster mining speeds. This industry can be very lucriticve and volatile. Good luck, Johnny'
+
+Config.gpuEmailSender = 'Jonathan Sanders'
+Config.gpuEmailSubject = 'New Graphics Card'
+Config.gpuEmailText = 'Congrats on the new graphics card. Make the most out of it, it is one profitable side hustle or buisness. Congrats, Johnny'
+
 Config.Price = {
     ['Stage 1'] = 85000, -- Price to buy the crypto miner
 }
