@@ -57,6 +57,7 @@ function CheckRTX4090()
 end
 
 RegisterNetEvent('razed-cryptomining:client:useGTX480', function()
+    local success = nil
     local gpu = 'shitgpu'
     local notif1 = {
         title = 'Installing Graphics Card',
@@ -76,8 +77,10 @@ RegisterNetEvent('razed-cryptomining:client:useGTX480', function()
         duration = '500',
         type = 'error'
     }
-
-    local success = lib.skillCheck({'easy', 'easy', {areaSize = 60, speedMultiplier = 1}, 'easy'}, {'1', '2'})
+    if Config.Minigame == 'ran-minigames' then
+        success = exports['ran-minigames']:OpenTerminal()
+    else if Config.Minigame == 'ox' then
+        success = lib.skillCheck({'easy', 'easy', {areaSize = 60, speedMultiplier = 1}, 'easy'}, {'1', '2'})
 
     if success == true then
     ExecuteCommand("e mechanic")
@@ -103,11 +106,14 @@ RegisterNetEvent('razed-cryptomining:client:useGTX480', function()
         end
 else
     TriggerEvent("ox_lib:notify", notif3)
+end
+end
 end
 end)
 
 RegisterNetEvent('razed-cryptomining:client:useGTX1050', function()
     local gpu = '1050gpu'
+    local success = nil
     local notif1 = {
         title = 'Installing Graphics Card',
         description = 'Please wait 15 seconds for the graphics card to be installed.',
@@ -127,7 +133,10 @@ RegisterNetEvent('razed-cryptomining:client:useGTX1050', function()
         type = 'error'
     }
 
-    local success = lib.skillCheck({'easy', 'easy', {areaSize = 60, speedMultiplier = 1.5}, 'easy'}, {'1', '2', '3', '4'})
+    if Config.Minigame == 'ran-minigames' then
+        success = exports['ran-minigames']:OpenTerminal()
+    else if Config.Minigame == 'ox' then
+        success = lib.skillCheck({'easy', 'easy', {areaSize = 60, speedMultiplier = 1.5}, 'easy'}, {'1', '2', '3', '4'})
 
     if success == true then
     ExecuteCommand("e mechanic")
@@ -153,11 +162,14 @@ RegisterNetEvent('razed-cryptomining:client:useGTX1050', function()
         end
 else
     TriggerEvent("ox_lib:notify", notif3)
+end
+end
 end
 end)
 
 RegisterNetEvent('razed-cryptomining:client:useGTX1060', function()
     local gpu = '1060gpu'
+    local success = nil
     local notif1 = {
         title = 'Installing Graphics Card',
         description = 'Please wait 15 seconds for the graphics card to be installed.',
@@ -177,7 +189,10 @@ RegisterNetEvent('razed-cryptomining:client:useGTX1060', function()
         type = 'error'
     }
 
-    local success = lib.skillCheck({'easy', 'easy', {areaSize = 60, speedMultiplier = 1.75}, 'easy'}, {'1', '2', '3', '4'})
+    if Config.Minigame == 'ran-minigames' then
+        success = exports['ran-minigames']:OpenTerminal()
+    else if Config.Minigame == 'ox' then
+        success = lib.skillCheck({'easy', 'easy', {areaSize = 60, speedMultiplier = 1.75}, 'easy'}, {'1', '2', '3', '4'})
 
     if success == true then
     ExecuteCommand("e mechanic")
@@ -203,11 +218,14 @@ RegisterNetEvent('razed-cryptomining:client:useGTX1060', function()
         end
 else
     TriggerEvent("ox_lib:notify", notif3)
+end
+end
 end
 end)
 
 RegisterNetEvent('razed-cryptomining:client:useGTX1080', function()
     local gpu = '1080gpu'
+    local success = nil
     local notif1 = {
         title = 'Installing Graphics Card',
         description = 'Please wait 15 seconds for the graphics card to be installed.',
@@ -227,7 +245,10 @@ RegisterNetEvent('razed-cryptomining:client:useGTX1080', function()
         type = 'error'
     }
 
-    local success = lib.skillCheck({'easy', 'easy', {areaSize = 60, speedMultiplier = 2}, 'medium'}, {'1', '2', '3', '4'})
+    if Config.Minigame == 'ran-minigames' then
+        success = exports['ran-minigames']:OpenTerminal()
+    else if Config.Minigame == 'ox' then
+        success = lib.skillCheck({'easy', 'easy', {areaSize = 60, speedMultiplier = 2}, 'medium'}, {'1', '2', '3', '4'})
 
     if success == true then
     ExecuteCommand("e mechanic")
@@ -253,11 +274,14 @@ RegisterNetEvent('razed-cryptomining:client:useGTX1080', function()
         end
 else
     TriggerEvent("ox_lib:notify", notif3)
+end
+end
 end
 end)
 
 RegisterNetEvent('razed-cryptomining:client:useRTX2080', function()
     local gpu = '2080gpu'
+    local success = nil
     local notif1 = {
         title = 'Installing Graphics Card',
         description = 'Please wait 15 seconds for the graphics card to be installed.',
@@ -277,7 +301,10 @@ RegisterNetEvent('razed-cryptomining:client:useRTX2080', function()
         type = 'error'
     }
 
-    local success = lib.skillCheck({'easy', 'easy', {areaSize = 60, speedMultiplier = 2.25}, 'medium'}, {'1', '2', '3', '4'})
+    if Config.Minigame == 'ran-minigames' then
+        success = exports['ran-minigames']:OpenTerminal()
+    else if Config.Minigame == 'ox' then
+        success = lib.skillCheck({'easy', 'easy', {areaSize = 60, speedMultiplier = 2.25}, 'medium'}, {'1', '2', '3', '4'})
 
     if success == true then
     ExecuteCommand("e mechanic")
@@ -303,11 +330,14 @@ RegisterNetEvent('razed-cryptomining:client:useRTX2080', function()
         end
 else
     TriggerEvent("ox_lib:notify", notif3)
+end
+end
 end
 end)
 
 RegisterNetEvent('razed-cryptomining:client:useRTX3060', function()
     local gpu = '3060gpu'
+    local success = nil
     local notif1 = {
         title = 'Installing Graphics Card',
         description = 'Please wait 15 seconds for the graphics card to be installed.',
@@ -327,7 +357,10 @@ RegisterNetEvent('razed-cryptomining:client:useRTX3060', function()
         type = 'error'
     }
 
-    local success = lib.skillCheck({'easy', 'medium', {areaSize = 60, speedMultiplier = 2.5}, 'medium'}, {'1', '2', '3', '4'})
+    if Config.Minigame == 'ran-minigames' then
+        success = exports['ran-minigames']:OpenTerminal()
+    else if Config.Minigame == 'ox' then
+        success = lib.skillCheck({'easy', 'medium', {areaSize = 60, speedMultiplier = 2.5}, 'medium'}, {'1', '2', '3', '4'})
 
     if success == true then
     ExecuteCommand("e mechanic")
@@ -354,10 +387,13 @@ RegisterNetEvent('razed-cryptomining:client:useRTX3060', function()
 else
     TriggerEvent("ox_lib:notify", notif3)
 end
+end
+end
 end)
 
 RegisterNetEvent('razed-cryptomining:client:useRTX4090', function()
     local gpu = '4090gpu'
+    local success = nil
     local notif1 = {
         title = 'Installing Graphics Card',
         description = 'Please wait 15 seconds for the graphics card to be installed.',
@@ -377,7 +413,10 @@ RegisterNetEvent('razed-cryptomining:client:useRTX4090', function()
         type = 'error'
     }
 
-    local success = lib.skillCheck({'easy', 'medium', {areaSize = 60, speedMultiplier = 3}, 'hard'}, {'1', '2', '3', '4'})
+    if Config.Minigame == 'ran-minigames' then
+        success = exports['ran-minigames']:OpenTerminal()
+    else if Config.Minigame == 'ox' then
+        success = lib.skillCheck({'easy', 'medium', {areaSize = 60, speedMultiplier = 3}, 'hard'}, {'1', '2', '3', '4'})
 
     if success == true then
     ExecuteCommand("e mechanic")
@@ -403,5 +442,7 @@ RegisterNetEvent('razed-cryptomining:client:useRTX4090', function()
         end
 else
     TriggerEvent("ox_lib:notify", notif3)
+end
+end
 end
 end)
