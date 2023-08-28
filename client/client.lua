@@ -1,308 +1,352 @@
 local QBCore = exports['qb-core']:GetCoreObject()
-local CryptoMinerProp = Config.CryptoMinerProp
 local CryptoBalance = 0.0
 local MinerStatus = false
+local defaultCard = 'shitgpu'
 
-local arg = {
-    owned = false
-}
+local function getData(citizenid)
+    local data = MySQL.Sync.prepare('SELECT * FROM cryptominers where citizenid = ?', { citizenid })
+    return data
+end
 
-RegisterNetEvent('razed-cryptomining:client:CryptoMiningMenu', function()
-    lib.registerContext({
-        id = 'cryptomenuon',
-        title = 'Crypto Miner Menu',
-        options = {
-            {
-                title = 'Toggle, View the Status or Withdraw.',
-              },
-            {
-                title = 'Toggle Crypto Miner',
-                description = 'This toggles the crypto miner to start or stop.',
-                icon = 'toggle-on',
-                onSelect = function()
-                    ToggleCryptoMiner()
-                    if MinerStatus == true then
-                        lib.showContext('cryptomenuon')
-                    else
-                        lib.showContext('cryptomenuoff')
-                    end
-                end,
-            },
-            {
-                title = 'Miner Status - 🟢',
-                description = 'Hover over this button to show the status of the miner.',
-                icon = 'question',
-                image = 'https://i.imgur.com/KiBDJuX.png'
-            },
-            {
-                title = 'Go Back',
-                description = 'Go back to the main menu.',
-                icon = 'arrow-left',
-                event = 'razed-cryptomining:client:CheckIfOwnedCrypto'
-            }
-      }}
-    )
-    lib.registerContext({
-        id = 'cryptomenuoff',
-        title = 'Crypto Miner Menu',
-        options = {
-            {
-                title = 'Toggle, View the Status or Withdraw.',
-              },
-            {
-                title = 'Toggle Crypto Miner',
-                description = 'This toggles the crypto miner to start or stop.',
-                icon = 'toggle-off',
-                onSelect = function()
-                    ToggleCryptoMiner()
-                    if MinerStatus == true then
-                        lib.showContext('cryptomenuon')
-                    else
-                        lib.showContext('cryptomenuoff')
-                    end
-                end,
-            },
-            {
-                title = 'Miner Status - 🔴',
-                description = 'Hover over this button to show the status of the miner.',
-                icon = 'question',
-                image = 'https://i.imgur.com/RWNejJy.png'
-            },
-            {
-                title = 'Withdraw',
-                description = 'Withdraw your crypto: '..Config.CryptoWithdrawalFeeShown.. '% Fee',
-                icon = 'dollar',
-                serverEvent = 'razed-cryptomining:server:withdrawcrypto',
-                image = 'https://i.imgur.com/UJGPHfe.png'
-            },
-            {
-                title = 'Go Back',
-                description = 'Go back to the main menu.',
-                icon = 'arrow-left',
-                event = 'razed-cryptomining:client:CheckIfOwnedCrypto'
-            },
-      }}
-    )
+local function getGPU(citizenid, card)
+    local dataGPU = MySQL.Sync.prepare('SELECT * FROM cryptominers where card = ?', { card })
+    local dataCitizen = MySQL.Sync.prepare('SELECT * FROM cryptominers where citizenid = ?', { citizenid })
+    return dataGPU, dataCitizen
+end
 
-    if MinerStatus == true then
-        lib.showContext('cryptomenuon')
-    else
-        lib.showContext('cryptomenuoff')
+RegisterNetEvent('razed-cryptomining:server:buyCryptoMiner', function()
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    local notif1 = {
+        title = 'Payment Success',
+        description = 'You have successfully purcashed the crypto miner in cash.',
+        type = 'success'
+    }
+    local notif2 = {
+        title = 'Payment Success',
+        description = 'You have successfully purcashed the crypto miner with your bank.',
+        type = 'success'
+    }
+    local notif3 = {
+        title = 'Payment Failed',
+        description = 'You have insuffient funds either in your bank or cash.',
+        type = 'error'
+    }
+
+    if Player.PlayerData.money.cash >= Config.Price['Stage 1'] then
+        TriggerClientEvent("ox_lib:notify", src, notif1)
+        TriggerClientEvent('razed-cryptomining:client:sendMail', src)
+        Player.Functions.RemoveMoney('cash', Config.Price['Stage 1'], "Bought Stage 1 Crypto Miner")
+        local id = MySQL.insert('INSERT INTO `cryptominers` (citizenid, card, balance) VALUES (?, ?, ?)',
+            { Player.PlayerData.citizenid, defaultCard, CryptoBalance  })
+        TriggerClientEvent('razed-cryptomining:client:addinfo', src, getData(Player.PlayerData.citizenid))
+    elseif Player.PlayerData.money.bank >= Config.Price['Stage 1'] then
+        TriggerClientEvent("ox_lib:notify", src, notif1)
+        TriggerClientEvent('razed-cryptomining:client:sendMail', src)
+        Player.Functions.RemoveMoney('bank', Config.Price['Stage 1'], "Bought Stage 1 Crypto Miner")
+        local id = MySQL.insert('INSERT INTO `cryptominers` (citizenid, card, balance) VALUES (?, ?, ?)',
+        { Player.PlayerData.citizenid, defaultCard, CryptoBalance })
+        TriggerClientEvent('razed-cryptomining:client:addinfo', src, getData(Player.PlayerData.citizenid))
+    else 
+        TriggerClientEvent("ox_lib:notify", src, notif3)
     end
 end)
 
-RegisterNetEvent('razed-cryptomining:client:BuyCryptoMining', function(args)
-    lib.registerContext({
-        id = 'buycryptominer',
-        title = 'Purchase Crypto Miner',
-        options = {
-            {
-                title = 'Purchase, Upgrade or use the Crypto Miner.',
-              },
-            {
-                title = 'Purchase',
-                description = 'Price: $'..Config.Price['Stage 1'],
-                icon = 'dollar',
-                serverEvent = 'razed-cryptomining:server:buyCryptoMiner',
-                disabled = args.owned,
-                metadata = {
-                  {label = 'Reviews:', value = '⭐⭐⭐⭐⭐/5'}
-                },
-            },
-            {
-                title = 'Proceed To Crypto Miner Menu',
-                description = 'If you click this button, it will locate you to the main user interface for the crypto miner.',
-                icon = 'fa-brands fa-bitcoin',
-                event = 'razed-cryptomining:client:CryptoMiningMenu',
-                disabled = not args.owned
-            },
-            {
-                title = 'Upgrade Mining Rig',
-                description = 'If you click this button, it will locate you to the upgrade menu.',
-                icon = 'fa-solid fa-sim-card',
-                event = 'razed-cryptomining:client:UpgradeCryptoMining',
-                disabled = not args.owned
-            }
-      }}
-    )
-    lib.showContext('buycryptominer')
+RegisterNetEvent('razed-cryptomining:server:getinfo', function()
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    local data = getData(Player.PlayerData.citizenid)
+    TriggerClientEvent('razed-cryptomining:client:addinfo', src, data)
 end)
 
-RegisterNetEvent('razed-cryptomining:client:UpgradeCryptoMining', function()
-    QBCore.Functions.TriggerCallback('razed-cryptomining:server:showGPU', function(GPUType)
-    QBCore.Functions.TriggerCallback('razed-cryptomining:server:checkGPUImage', function(image)
+RegisterNetEvent('razed-cryptomining:server:withdrawcrypto', function()
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    local data = getData(Player.PlayerData.citizenid)
 
-    lib.registerContext({
-        id = 'upgradecryptominer',
-        title = 'Upgrade Crypto Miner',
-        options = {
-            {
-                title = 'Got the GPU? Upgrade it here!',
-            },
-            {
-                title = 'Current GPU: '..GPUType,
-                image = image
-            },
-            {
-                title = 'Go Back',
-                description = 'Go back to the main menu.',
-                icon = 'arrow-left',
-                event = 'razed-cryptomining:client:CheckIfOwnedCrypto'
-            },
-            {
-                title = 'GTX 480',
-                description = 'The default gpu... We will just say its a classic...',
-                icon = 'fa-solid fa-question',
-                event = 'razed-cryptomining:client:useGTX480',
-                image = 'https://i.imgur.com/UFEWLG0.png',
-                disabled = CheckGTX480()
-            },
-            {
-                title = 'GTX 1050',
-                description = 'The second gpu. It is alright, but still quite slow.',
-                icon = 'fa-solid fa-1',
-                event = 'razed-cryptomining:client:useGTX1050',
-                image = 'https://i.imgur.com/Gyml2VP.png',
-                disabled = CheckGTX1050()
-            },
-            {
-                title = 'GTX 1060',
-                description = 'The third gpu. Its +10 from the last so it has to be good right?',
-                icon = 'fa-solid fa-2',
-                event = 'razed-cryptomining:client:useGTX1060',
-                image = 'https://i.imgur.com/O10IWVC.png',
-                disabled = CheckGTX1060()
-            },
-            {
-                title = 'GTX 1080',
-                description = 'The fourth best gpu. An absolute classic!',
-                icon = 'fa-solid fa-3',
-                event = 'razed-cryptomining:client:useGTX1080',
-                image = 'https://i.imgur.com/gwQzyHX.png',
-                disabled = CheckGTX1080()
-            },
-            {
-                title = 'RTX 2080',
-                description = 'The 3nd best gpu. Was good a few years ago, but still great.',
-                icon = 'fa-solid fa-4',
-                event = 'razed-cryptomining:client:useRTX2080',
-                image = 'https://i.imgur.com/qJ376Ca.png',
-                disabled = CheckRTX2080()
-            },
-            {
-                title = 'RTX 3060',
-                description = 'The 2nd best gpu. The best gpu for price to preformance, but still not the best.',
-                icon = 'fa-solid fa-5',
-                event = 'razed-cryptomining:client:useRTX3060',
-                image = 'https://i.imgur.com/OtquIm1.png',
-                disabled = CheckRTX3060()
-            },
-            {
-                title = 'RTX 4090',
-                description = 'The best of the best. An absolute tank, no need for another upgrade.',
-                icon = 'fa-solid fa-6',
-                event = 'razed-cryptomining:client:useRTX4090',
-                image = 'https://i.imgur.com/fM9V5jn.png',
-                disabled = CheckRTX4090()
-            }
-      }}
-    )
-    lib.showContext('upgradecryptominer')
-end)
-end)
-end)
+    local row = MySQL.single.await('SELECT `balance` FROM `cryptominers` WHERE `citizenid` = ?', {
+        Player.PlayerData.citizenid
+    })
+    local notif1 = {
+        title = 'Withdrawal Failed',
+        description = 'You have insuffient withdrawal funds. Keep mining!',
+        duration = '500',
+        type = 'error'
+    }
+    local notif2 = {
+        title = 'Withdrawal Successfull',
+        description = 'The funds have been successfully withdrew! '..row.balance..' coins collected, with a '..Config.CryptoWithdrawalFeeShown..'% fee.',
+        duration = '500',
+        type = 'success'
+    }
 
-function ToggleCryptoMiner()
- if MinerStatus == true then
-        lib.notify({
-            title = 'Stopping Miner!',
-            description = 'The miner has been stopped and now will stop mining coins.',
-            type = 'error',
-            duration = '500'
-        })
-        Wait(500)
-            MinerStatus = false
-            print('Stopped Miner')
-        MinerStopped()
-    else if MinerStatus == false then
-        lib.notify({
-            title = 'Starting Miner!',
-            description = 'The miner has been started and now will start mining coins!',
-            type = 'success',
-            duration = '500'
-        })
-        Wait(500)
-            MinerStatus = true
-            print('Starting Miner')
-        MinerStarted()
+if Config.Crypto == 'qb' then
+    if row.balance > 0.001 then
+    local id = MySQL.update.await('UPDATE cryptominers SET balance = ? WHERE citizenid = ?', {
+        0, Player.PlayerData.citizenid
+    })
+    Player.Functions.AddMoney('crypto', row.balance * Config.CryptoWithdrawalFee)
+    row.balance = row.balance - row.balance
+    TriggerClientEvent("ox_lib:notify", src, notif2)
+    else if row.balance < 0.001 then
+        TriggerClientEvent("ox_lib:notify", src, notif1)
+    else
+    TriggerClientEvent("ox_lib:notify", src, notif1)
+    end
+end
+else if Config.Crypto == 'renewed-phone' then
+    if row.balance > 0.01 then 
+        exports['qb-phone']:AddCrypto(src, Config.RenewedCryptoType, row.balance * Config.CryptoWithdrawalFee)
+        row.balance = row.balance - row.balance
+        local id = MySQL.update.await('UPDATE cryptominers SET balance = ? WHERE citizenid = ?', {
+            0, Player.PlayerData.citizenid
+        })        TriggerClientEvent("ox_lib:notify", src, notif2)
+        else if row.balance < 0.0001 then
+            TriggerClientEvent("ox_lib:notify", src, notif1)
+        else
+        TriggerClientEvent("ox_lib:notify", src, notif1)
+        end
     end
   end
-end
+ end
+end)
 
-RegisterNetEvent('razed-cryptomining:client:addinfo', function(data)
-    if data == nil then
-        arg.owned = false
-    else
-        arg.owned = true
+RegisterNetEvent('razed-cryptomining:server:switch',function(switchStatus)
+    MinerStatus = switchStatus
+end)
+
+AddEventHandler('playerDropped', function()
+    MinerStatus = false
+end)
+
+QBCore.Functions.CreateCallback('razed-cryptomining:server:showGPU', function(source, cb)
+local src = source
+local Player = QBCore.Functions.GetPlayer(src)
+local PlayerCitizenID = Player.PlayerData.citizenid
+local GPUType = 'Unkown'
+
+if getGPU(PlayerCitizenID, 'shitgpu') then
+    GPUType = "GTX 480"
+    else if getGPU(PlayerCitizenID, '1050gpu') then
+        GPUType = "GTX 1050"
+        else if getGPU(PlayerCitizenID, '1060gpu') then
+            GPUType = "GTX 1060"
+            else if getGPU(PlayerCitizenID, '1080gpu') then
+                GPUType = "GTX 1080"
+                else if getGPU(PlayerCitizenID, '2080gpu') then
+                    GPUType = "RTX 2080"
+                    else if getGPU(PlayerCitizenID, '3060gpu') then
+                        GPUType = "RTX 3060"
+                        else if getGPU(PlayerCitizenID, '4090gpu') then
+                            GPUType = "RTX 4090"
+                        end
+                        end
+                    end
+                end
+            end
+        end
     end
+cb(GPUType)
 end)
 
-function MinerStarted()
-    TriggerServerEvent('InteractSound_SV:PlayWithinDistance', 0.5, 'progressbar', 0.5)
-    TriggerServerEvent('razed-cryptomining:server:switch', true)
-    TriggerServerEvent('razed-cryptomining:server:miningSystem')
-end
+QBCore.Functions.CreateCallback('razed-cryptomining:server:checkGPUImage', function(source, cb)
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    local PlayerCitizenID = Player.PlayerData.citizenid
+    local image = 'Unkown'
 
-function MinerStopped()
-    TriggerServerEvent('InteractSound_SV:PlayWithinDistance', 0.5, 'progressbarcancel', 0.5)
-    TriggerServerEvent('razed-cryptomining:server:switch', false)
-end
-
-RegisterNetEvent('razed-cryptomining:client:CheckIfOwnedCrypto', function()
-    TriggerServerEvent('razed-cryptomining:server:getinfo')
-    Wait(500)
-    TriggerEvent('razed-cryptomining:client:BuyCryptoMining', arg)
+    if getGPU(PlayerCitizenID, 'shitgpu') then
+        image = "https://i.imgur.com/UFEWLG0.png"
+        else if getGPU(PlayerCitizenID, '1050gpu') then
+            image = "https://i.imgur.com/Gyml2VP.png"
+            else if getGPU(PlayerCitizenID, '1060gpu') then
+                image = "https://i.imgur.com/O10IWVC.png"
+                else if getGPU(PlayerCitizenID, '1080gpu') then
+                    image = "https://i.imgur.com/gwQzyHX.png"
+                    else if getGPU(PlayerCitizenID, '2080gpu') then
+                        image = "https://i.imgur.com/qJ376Ca.png"
+                        else if getGPU(PlayerCitizenID, '3060gpu') then
+                            image = "https://i.imgur.com/OtquIm1.png"
+                            else if getGPU(PlayerCitizenID, '4090gpu') then
+                                image = "https://i.imgur.com/fM9V5jn.png"
+                            end
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    cb(image)
 end)
 
-RegisterNetEvent('razed-cryptomining:client:sendMail', function()
-    TriggerServerEvent('qb-phone:server:sendNewMail', {
-        sender = Config.PurchaseEmailSender,
-        subject = Config.PurchaseEmailSubject,
-        message = Config.PurchaseEmailText,
+RegisterNetEvent('razed-cryptomining:server:sendGPUDatabase', function(gpu)
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    local PlayerCitizenID = Player.PlayerData.citizenid
+
+    if gpu == nil then
+        print('Attempted!')
+        else
+    local id = MySQL.update.await('UPDATE cryptominers SET card = ? WHERE citizenid = ?', {
+        gpu, Player.PlayerData.citizenid
     })
+    Player.Functions.RemoveItem(gpu, 1)
+    TriggerClientEvent('razed-cryptomining:client:sendGPUMail', src)
+end
 end)
 
-RegisterNetEvent('razed-cryptomining:client:sendGPUMail', function()
-    TriggerServerEvent('qb-phone:server:sendNewMail', {
-        sender = Config.gpuEmailSender,
-        subject = Config.gpuEmailSubject,
-        message = Config.gpuEmailText,
-    })
-end)
+RegisterNetEvent('razed-cryptomining:server:miningSystem', function()
+local src = source
+local Player = QBCore.Functions.GetPlayer(src)
+local PlayerCitizenID = Player.PlayerData.citizenid
 
 CreateThread(function()
-    if Config.Target == 'qb' then
-    exports['qb-target']:AddTargetModel(CryptoMinerProp, {
-        options = {
-            { 
-                icon = "fa-brands fa-bitcoin",
-                label = "Open Crypto Miner Menu",
-                event = "razed-cryptomining:client:CheckIfOwnedCrypto"
-            },
-          },
-          distance = 3.0,
-    })
-else if Config.Target == 'ox' then
-    exports.ox_target:addModel(CryptoMinerProp, {
-        options = {
-            {
-                icon = "fa-brands fa-bitcoin",
-                label = "Open Crypto Miner Menu",
-                event = "razed-cryptomining:client:CheckIfOwnedCrypto"
-            },
-        },
-        distance = 3.0,
-    })
+if getGPU(PlayerCitizenID,'shitgpu')  then
+        while true do
+            Wait(1000)
+            while MinerStatus do
+                Wait(math.random(15000, 50000))
+                if MinerStatus == false then
+                    break
+                else if MinerStatus == true then
+                CryptoBalance = CryptoBalance + math.random(1, 3) / 10
+                local id = MySQL.update.await('UPDATE cryptominers SET balance = ? WHERE citizenid = ?', {
+                    CryptoBalance, Player.PlayerData.citizenid
+                })
+                Wait(math.random(2500, 10000))
+                if false then
+                    break
+                end
+            end
+        end
     end
-  end
+        end
+    else if getGPU(PlayerCitizenID, '1050gpu') then
+                while true do
+                    Wait(1000)
+                    while MinerStatus do
+                        Wait(math.random(12500, 40000))
+                        if MinerStatus == false then
+                            break
+                        else if MinerStatus == true then
+                        CryptoBalance = CryptoBalance + math.random(2, 6) / 10
+                        local id = MySQL.update.await('UPDATE cryptominers SET balance = ? WHERE citizenid = ?', {
+                            CryptoBalance, Player.PlayerData.citizenid
+                        })
+                        Wait(math.random(1500, 8000))
+                        if false then
+                            break
+                        end
+                    end
+                end
+            end
+                end
+            else if getGPU(PlayerCitizenID, '1060gpu') then
+                    while true do
+                        Wait(1000)
+                        while MinerStatus do
+                            Wait(math.random(10000, 35000))
+                            if MinerStatus == false then
+                                break
+                            else if MinerStatus == true then
+                            CryptoBalance = CryptoBalance + math.random(3, 7) / 10
+                            local id = MySQL.update.await('UPDATE cryptominers SET balance = ? WHERE citizenid = ?', {
+                                CryptoBalance, Player.PlayerData.citizenid
+                            })
+                            Wait(math.random(1500, 8000))
+                            if false then
+                                break
+                            end
+                        end
+                    end
+                end
+                    end
+                else if getGPU(PlayerCitizenID, '1080gpu') then
+                        while true do
+                            Wait(1000)
+                            while MinerStatus do
+                                Wait(math.random(8000, 30000))
+                                if MinerStatus == false then
+                                    break
+                                else if MinerStatus == true then
+                                CryptoBalance = CryptoBalance + math.random(5, 10) / 10
+                                local id = MySQL.update.await('UPDATE cryptominers SET balance = ? WHERE citizenid = ?', {
+                                    CryptoBalance, Player.PlayerData.citizenid
+                                })
+                                Wait(math.random(1000, 6500))
+                                if false then
+                                    break
+                                end
+                            end
+                        end
+                    end
+                        end
+                    else if getGPU(PlayerCitizenID, '2080gpu') then
+                            while true do
+                                Wait(1000)
+                                while MinerStatus do
+                                    Wait(math.random(7500, 27500))
+                                    if MinerStatus == false then
+                                        break
+                                    else if MinerStatus == true then
+                                    CryptoBalance = CryptoBalance + math.random(7, 11) / 10
+                                    local id = MySQL.update.await('UPDATE cryptominers SET balance = ? WHERE citizenid = ?', {
+                                        CryptoBalance, Player.PlayerData.citizenid
+                                    })
+                                    Wait(math.random(800, 4500))
+                                    if false then
+                                        break
+                                    end
+                                end
+                            end
+                                end
+                            end
+                    else if getGPU(PlayerCitizenID, '3060gpu') then
+                            while true do
+                                Wait(1000)
+                                while MinerStatus do
+                                    Wait(math.random(5500, 20500))
+                                    if MinerStatus == false then
+                                        break
+                                    else if MinerStatus == true then
+                                    CryptoBalance = CryptoBalance + math.random(10, 15) / 10
+                                    local id = MySQL.update.await('UPDATE cryptominers SET balance = ? WHERE citizenid = ?', {
+                                        CryptoBalance, Player.PlayerData.citizenid
+                                    })
+                                    Wait(math.random(600, 2500))
+                                    if false then
+                                        break
+                                    end
+                                end
+                            end
+                                end
+                            end
+                else if getGPU(PlayerCitizenID, '4090gpu') then
+                        while true do
+                            Wait(1000)
+                            while MinerStatus do
+                                Wait(math.random(2500, 18500))
+                                if MinerStatus == false then
+                                    break
+                                else if MinerStatus == true then
+                                CryptoBalance = CryptoBalance + math.random(20, 40) / 8
+                                local id = MySQL.update.await('UPDATE cryptominers SET balance = ? WHERE citizenid = ?', {
+                                    CryptoBalance, Player.PlayerData.citizenid
+                                })
+                                Wait(math.random(300, 1500))
+                                if false then
+                                    break
+                                end
+                            end
+                        end
+                    end
+                        end
+                    end
+                    end      
+                end
+            end
+        end
+    end
+ end
+end)
 end)
