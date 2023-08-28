@@ -1,4 +1,4 @@
-![razedcryptomining5](https://github.com/planeklm/razed-cryptomining/assets/91488137/e8baa282-faf8-47b6-a065-6647d752fbf7)
+![razedcryptomining5round](https://github.com/planeklm/razed-cryptomining/assets/91488137/aa00c1b1-792b-46ab-9716-150f64f1ae6c)
 
 **Hello FiveM community!👋**\
 We have created an crypto mining system for the qbcore framework. The overall idea for this script is that I have yet to find a free crypto miner which functions. Thank you to everybody who contributed to this project, I am very proud of what we have created!
