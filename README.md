@@ -5,7 +5,7 @@ We have created an crypto mining system for the qbcore framework. The overall id
 
 **This is WIP project.**
 
-# Key Features of this Resource:
+![featurescryptoround](https://github.com/planeklm/razed-cryptomining/assets/91488137/666fd941-2e4c-4f1f-b760-bd78fd9955b8)
  1. 
 
 # How To Install
