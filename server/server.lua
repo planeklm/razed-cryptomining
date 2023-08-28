@@ -86,6 +86,7 @@ if Config.Crypto == 'qb' then
         0, Player.PlayerData.citizenid
     })
     Player.Functions.AddMoney('crypto', row.balance * Config.CryptoWithdrawalFee)
+    row.balance = row.balance - row.balance
     TriggerClientEvent("ox_lib:notify", src, notif2)
     else if row.balance < 0.001 then
         TriggerClientEvent("ox_lib:notify", src, notif1)
