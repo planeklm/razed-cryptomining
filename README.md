@@ -12,8 +12,7 @@ We have created an crypto mining system for the qbcore framework. The overall id
 * **Fully open-source & customizable** - Want to add more graphics cards? Or help us expand this script? We've made our script in the main idea of community collabration. Not sure what to do? We've made our config file with as many options to suit your server.
 * **Free of charge** - That's a bonus!
 
-![previewround](https://github.com/planeklm/razed-cryptomining/assets/91488137/b821e771-c993-42d6-9f62-288074569a3d)
-[Click Here](https://youtu.be/ohPHNCPLdt4)
+[![preview2round](https://github.com/planeklm/razed-cryptomining/assets/91488137/3f742055-4868-4466-bddb-dba91791b89a)](https://youtu.be/ohPHNCPLdt4)
 
 ![instalationround](https://github.com/planeklm/razed-cryptomining/assets/91488137/3a363400-dd3f-4644-9334-9ef832df0cfa)
 * Drag and drop `razed-cryptomining`
