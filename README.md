@@ -5,6 +5,10 @@ We have created an crypto mining system for the qbcore framework. The overall id
 
 **This is WIP project.**
 
+[![](https://i.imgur.com/QkkJONI.png)](https://youtu.be/ohPHNCPLdt4)
+[Or Click Here](https://youtu.be/ohPHNCPLdt4)
+
+
 ![featurescryptoround](https://github.com/planeklm/razed-cryptomining/assets/91488137/666fd941-2e4c-4f1f-b760-bd78fd9955b8)
 * **7 graphics card options with varible mining rates** - Our script offers a taste of realism with 7 different graphics card which you can configure to your choice.
 * **Easy to use UI** - Utilizing ox lib, we've tried to make our UI as simple as possible, meaning every player knows what to do.
@@ -16,8 +20,6 @@ We have created an crypto mining system for the qbcore framework. The overall id
 * Drag and drop `razed-cryptomining`
 * In your `server.cfg` add `ensure razed-cryptomining`
 * Execute the `cryptomining.sql` into your database
-
-[![](https://i.imgur.com/QkkJONI.png)](https://youtu.be/ohPHNCPLdt4)
 
 # Recomendations From Us
 * If using `ps-housing` or `qb-housing`, we reccomend to change the price of the server rack prop to the appropriate price of a mining rig. You can use the server rack prop as a mining rig for houses or warehouses!
