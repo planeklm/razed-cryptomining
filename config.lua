@@ -11,11 +11,10 @@ Config.CryptoWithdrawalFee = '0.90' -- This is a percentage of the fee when with
 
 Config.Target = 'qb' -- 'qb' or 'ox' depending on the target you use
 
-Config.Minigame = 'ox' -- 'ox' if ox it will be a circle minigame
-
 Config.Crypto = 'qb' -- 'qb' or 'renewed-phone' depending on the crypto resource you use
 Config.RenewedCryptoType = "gne" -- "gne" or "shung" or "xcoin" or "lme" - only change if using renewed phone
 
+Config.Email = true -- if true, it will send the player the emails, if false it wont send the emails
 Config.PurchaseEmailSender = 'Jonathan Sanders'
 Config.PurchaseEmailSubject = 'New Crypto Miner'
 Config.PurchaseEmailText = 'Congrats on the crypto miner. Want some info? The default GTX 480 is very slow, I reccomend to install a newer and more powerfull graphics card for faster mining speeds. This industry can be very lucriticve and volatile. Good luck, Johnny'
