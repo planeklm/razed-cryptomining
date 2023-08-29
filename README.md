@@ -6,7 +6,11 @@ We have created an crypto mining system for the qbcore framework. The overall id
 **This is WIP project.**
 
 ![featurescryptoround](https://github.com/planeklm/razed-cryptomining/assets/91488137/666fd941-2e4c-4f1f-b760-bd78fd9955b8)
- 1. 
+ 1. **7 graphics card options with varible mining rates** - Our script offers a taste of realism with 7 different graphics card which you can configure to your choice.
+ 2. **Easy to use UI** - Utilizing ox lib, we've tried to make our UI as simple as possible, meaning every player knows what to do.
+ 3. **Lightweight and optimized** - We've tried to make the most lightweight and optimized script, this means it can run on virtually any server without sacrificing preformance.
+ 4. **Fully open-source & customizable** - Want to add more graphics cards? Or help us expand this script? We've made our script in the main idea of community collabration. Not sure what to do? We've made our config file with as many options to suit your server.
+ 5. **Free of charge** - That's a bonus!
 
 # How To Install
 * Drag and drop `razed-cryptomining`
@@ -14,7 +18,7 @@ We have created an crypto mining system for the qbcore framework. The overall id
 * Execute the `cryptomining.sql` into your database
 
 # Recomendations From Us
-* If using `ps-housing`, we reccomend to change the price of the server rack prop to the appropriate price of a mining rig.
+* If using `ps-housing` or `qb-housing`, we reccomend to change the price of the server rack prop to the appropriate price of a mining rig. You can use the server rack prop as a mining rig for houses or warehouses!
 
 # Items & Images
 **❤️ to Markow (amsali22) for making this!**\
@@ -59,7 +63,6 @@ We have created an crypto mining system for the qbcore framework. The overall id
 [ox_target](https://github.com/overextended/ox_target)
 
 # Optionals
-[ran-minigames](https://github.com/RanDXDev/ran-minigames) -- Thanks for making this RanDXD ❤️\
 [renewed-phone](https://github.com/Renewed-Scripts/qb-phone)
 
 # Script Optimization Preview
