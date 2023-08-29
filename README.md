@@ -17,7 +17,7 @@ We have created an crypto mining system for the qbcore framework. The overall id
 * In your `server.cfg` add `ensure razed-cryptomining`
 * Execute the `cryptomining.sql` into your database
 
-[![](https://github.com/planeklm/razed-cryptomining/assets/91488137/3f742055-4868-4466-bddb-dba91791b89a)](https://youtu.be/ohPHNCPLdt4)
+[![](https://i.imgur.com/QkkJONI.png)](https://youtu.be/ohPHNCPLdt4)
 
 # Recomendations From Us
 * If using `ps-housing` or `qb-housing`, we reccomend to change the price of the server rack prop to the appropriate price of a mining rig. You can use the server rack prop as a mining rig for houses or warehouses!
