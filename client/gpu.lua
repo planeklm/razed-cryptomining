@@ -105,8 +105,6 @@ RegisterNetEvent('razed-cryptomining:client:useGTX480', function()
 else
     TriggerEvent("ox_lib:notify", notif3)
 end
-end
-end
 end)
 
 RegisterNetEvent('razed-cryptomining:client:useGTX1050', function()
@@ -157,8 +155,6 @@ RegisterNetEvent('razed-cryptomining:client:useGTX1050', function()
         end
 else
     TriggerEvent("ox_lib:notify", notif3)
-end
-end
 end
 end)
 
@@ -211,8 +207,6 @@ RegisterNetEvent('razed-cryptomining:client:useGTX1060', function()
 else
     TriggerEvent("ox_lib:notify", notif3)
 end
-end
-end
 end)
 
 RegisterNetEvent('razed-cryptomining:client:useGTX1080', function()
@@ -263,8 +257,6 @@ RegisterNetEvent('razed-cryptomining:client:useGTX1080', function()
         end
 else
     TriggerEvent("ox_lib:notify", notif3)
-end
-end
 end
 end)
 
@@ -317,8 +309,6 @@ RegisterNetEvent('razed-cryptomining:client:useRTX2080', function()
 else
     TriggerEvent("ox_lib:notify", notif3)
 end
-end
-end
 end)
 
 RegisterNetEvent('razed-cryptomining:client:useRTX3060', function()
@@ -370,8 +360,6 @@ RegisterNetEvent('razed-cryptomining:client:useRTX3060', function()
 else
     TriggerEvent("ox_lib:notify", notif3)
 end
-end
-end
 end)
 
 RegisterNetEvent('razed-cryptomining:client:useRTX4090', function()
@@ -422,7 +410,5 @@ RegisterNetEvent('razed-cryptomining:client:useRTX4090', function()
         end
 else
     TriggerEvent("ox_lib:notify", notif3)
-end
-end
 end
 end)
