@@ -11,7 +11,7 @@ Config.CryptoWithdrawalFee = '0.90' -- This is a percentage of the fee when with
 
 Config.Target = 'qb' -- 'qb' or 'ox' depending on the target you use
 
-Config.Minigame = 'ox' -- 'ox' or 'ran-minigames' if ran-minigames it will do a terminal like minigame, if ox it will be a circle minigame
+Config.Minigame = 'ox' -- 'ox' if ox it will be a circle minigame
 
 Config.Crypto = 'qb' -- 'qb' or 'renewed-phone' depending on the crypto resource you use
 Config.RenewedCryptoType = "gne" -- "gne" or "shung" or "xcoin" or "lme" - only change if using renewed phone
