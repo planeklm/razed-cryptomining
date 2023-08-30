@@ -13,7 +13,7 @@ We have created an crypto mining system for the qbcore framework. The overall id
 * **Free of charge** - That's a bonus!
 
 # Preview
-[![](https://i.imgur.com/ovr7NsU.png)](https://youtu.be/ohPHNCPLdt4)
+[![](https://i.imgur.com/USdx6mP.png)](https://youtu.be/ohPHNCPLdt4)
 
 # Installation
 * Drag and drop `razed-cryptomining`
