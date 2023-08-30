@@ -1,21 +1,21 @@
-![razedcryptomining5round](https://github.com/planeklm/razed-cryptomining/assets/91488137/aa00c1b1-792b-46ab-9716-150f64f1ae6c)
+![RazedCryptoMining23](https://github.com/planeklm/razed-cryptomining/assets/91488137/2974fd19-33f9-409a-a1a1-194d1590237c)
 
 **Hello FiveM community!👋**\
 We have created an crypto mining system for the qbcore framework. The overall idea for this script is that I have yet to find a free crypto miner which functions. Thank you to everybody who contributed to this project, I am very proud of what we have created!
 
 **This is WIP project.**
 
-![featurescryptoround](https://github.com/planeklm/razed-cryptomining/assets/91488137/666fd941-2e4c-4f1f-b760-bd78fd9955b8)
+# Features
 * **7 graphics card options with varible mining rates** - Our script offers a taste of realism with 7 different graphics card which you can configure to your choice.
 * **Easy to use UI** - Utilizing ox lib, we've tried to make our UI as simple as possible, meaning every player knows what to do.
 * **Lightweight and optimized** - We've tried to make the most lightweight and optimized script, this means it can run on virtually any server without sacrificing preformance.
 * **Fully open-source & customizable** - Want to add more graphics cards? Or help us expand this script? We've made our script in the main idea of community collabration. Not sure what to do? We've made our config file with as many options to suit your server.
 * **Free of charge** - That's a bonus!
 
-[![](https://i.imgur.com/QkkJONI.png)](https://youtu.be/ohPHNCPLdt4)
-[Or Click Here](https://youtu.be/ohPHNCPLdt4)
+# Preview
+[![](https://i.imgur.com/ovr7NsU.png)](https://youtu.be/ohPHNCPLdt4)
 
-![instalationround](https://github.com/planeklm/razed-cryptomining/assets/91488137/3a363400-dd3f-4644-9334-9ef832df0cfa)
+# Installation
 * Drag and drop `razed-cryptomining`
 * In your `server.cfg` add `ensure razed-cryptomining`
 * Execute the `cryptomining.sql` into your database
