@@ -3,8 +3,6 @@
 **Hello FiveM community!👋**\
 We have created an crypto mining system for the qbcore framework. The overall idea for this script is that I have yet to find a free crypto miner which functions. Thank you to everybody who contributed to this project, I am very proud of what we have created!
 
-**This is WIP project.**
-
 # Features
 * **7 graphics card upgrades** - If your players are needing an upgrade, they can choose 7 different tiers of graphics cards, from the GTS 480 to the RTS 4090.
 * **Withdraw crypto with a set fee** - When the coins are withdrew, you can set a fee (default 10%).
