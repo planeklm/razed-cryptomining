@@ -11,10 +11,6 @@ We have created an crypto mining system for the qbcore framework. The overall id
 * **Fully open-source & customizable** - Want to add more graphics cards? Or help us expand this script? We've made our script in the main idea of community collabration. Not sure what to do? We've made our config file with as many options to suit your server.
 * **Configurable prices, props, fees and emails**
 
-
-# Features
-
-
 # Preview
 [![](https://i.imgur.com/USdx6mP.png)](https://youtu.be/ohPHNCPLdt4)
 
