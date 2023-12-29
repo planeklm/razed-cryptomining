@@ -362,3 +362,44 @@ if getGPU(PlayerCitizenID,'shitgpu')  then
  end
 end)
 end)
+
+-- for example - /sellcrypto 150 will sell 150 qbit at current price
+
+QBCore.Commands.Add("sellcrypto", "Sell your cryptocurrency", {}, false, function(source, args)
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+
+    if not Config.SellCryptoEnabled then
+        TriggerClientEvent('QBCore:Notify', src, "Selling cryptocurrency is currently disabled.", "error")
+        return
+    end
+
+    if Player == nil then
+        TriggerClientEvent('QBCore:Notify', src, "Player not found.", "error")
+        return
+    end
+
+    local coins = tonumber(args[1])
+    if coins == nil or coins <= 0 then
+        TriggerClientEvent('QBCore:Notify', src, "ehhh... try again with a valid amount.", "error")
+        return
+    end
+
+    MySQL.Async.fetchScalar("SELECT worth FROM crypto WHERE crypto = 'qbit'", {}, function(cryptoWorth)
+        if cryptoWorth and cryptoWorth > 0 then
+            local playerCryptoBalance = Player.PlayerData.money.crypto or 0
+
+            if playerCryptoBalance >= coins then
+                local amount = math.floor(coins * cryptoWorth)
+                Player.Functions.RemoveMoney('crypto', coins)
+                Player.Functions.AddMoney('bank', amount)
+
+                TriggerClientEvent('QBCore:Notify', src, "You've sold " .. tostring(coins) .. " crypto for $" .. tostring(amount), "success")
+            else
+                TriggerClientEvent('QBCore:Notify', src, "You don't have enough crypto to sell.", "error")
+            end
+        else
+            TriggerClientEvent('QBCore:Notify', src, "Unable to get crypto worth.", "error")
+        end
+    end)
+end)
