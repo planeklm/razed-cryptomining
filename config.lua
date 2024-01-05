@@ -5,6 +5,8 @@ Config.CryptoMinerProp = {
     `v_corp_servercln`
 }
 
+Config.SellCryptoEnabled = true  -- Set to false to disable the 'sellcrypto' command.
+
 -- If one of these have been changed, you must change both to not confuse players.
 Config.CryptoWithdrawalFeeShown = '10' -- This is a percentage shown the the ox_lib menu - e.g 10 = 10%
 Config.CryptoWithdrawalFee = '0.90' -- This is a percentage of the fee when withdrawing the crypto - e.g 0.90 = 10%
