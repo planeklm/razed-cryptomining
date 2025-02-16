@@ -56,6 +56,14 @@ function CheckRTX4090()
     end
 end
 
+function CheckRTX5090()
+    if QBCore.Functions.HasItem('5090gpu') then
+        return false
+    else
+        return true
+    end
+end
+
 RegisterNetEvent('razed-cryptomining:client:useGTX480', function()
     local success = nil
     local gpu = 'shitgpu'
@@ -412,3 +420,55 @@ else
     TriggerEvent("ox_lib:notify", notif3)
 end
 end)
+
+RegisterNetEvent('razed-cryptomining:client:useRTX5090', function()
+    local gpu = '5090gpu'
+    local success = nil
+    local notif1 = {
+        title = 'Installing Graphics Card',
+        description = 'Please wait 15 seconds for the graphics card to be installed.',
+        duration = '500',
+        type = 'success'
+    }
+    local notif2 = {
+        title = 'Successfully Installed Graphics Card!',
+        description = 'Enjoy mining those cryptos!',
+        duration = '500',
+        type = 'success'
+    }
+    local notif3 = {
+        title = 'Error',
+        description = 'Something bad happened! Oh no!',
+        duration = '500',
+        type = 'error'
+    }
+
+    success = lib.skillCheck({'easy', 'medium', {areaSize = 60, speedMultiplier = 3.2}, 'hard'}, {'1', '2', '3', '4'})
+
+    if success == true then
+    ExecuteCommand("e mechanic")
+    TriggerEvent("ox_lib:notify", notif1)
+    if lib.progressCircle({
+        duration = 15000,
+        position = 'bottom',
+        label = 'Install Graphics Card...',
+        useWhileDead = false,
+        canCancel = false,
+        disable = {
+            car = true,
+            move = true,
+            combat = true,
+        },
+    }) then
+            TriggerEvent("ox_lib:notify", notif2)
+            TriggerServerEvent('razed-cryptomining:server:sendGPUDatabase', gpu)
+            ExecuteCommand("e c")
+        else
+            TriggerEvent("ox_lib:notify", notif3)
+            ExecuteCommand("e c")
+        end
+else
+    TriggerEvent("ox_lib:notify", notif3)
+end
+end)
+
