@@ -5,7 +5,7 @@ description "Razed's Crypto Mining"
 
 author 'Razed Scripts'
 
-version '1.0'
+version '1.9'
 
 lua54 'yes'
 
