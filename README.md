@@ -23,7 +23,7 @@ We have created an crypto mining system for the qbcore framework. The overall id
 * If using `ps-housing` or `qb-housing`, we reccomend to change the price of the server rack prop to the appropriate price of a mining rig. You can use the server rack prop as a mining rig for houses or warehouses!
 
 # Items & Images
-**❤️ to Markow (amsali22) for making this!**\
+**❤️ to Markow (amsali22) for making 99% this!**\
 [razed-crypto-imgs](https://github.com/amsali22/razed-crypto-imgs)
 
 * Drag and Drop the `images` to your inventory `images` folder.
@@ -31,8 +31,7 @@ We have created an crypto mining system for the qbcore framework. The overall id
 * Add This to your `qb-core/shared/items.lua` For items to work.
 
 ```
-
-	["shitgpu"] 				    = {["name"] = "shitgpu", 			 	  	["label"] = "A trash gpu",            ["weight"] = 0, 		["type"] = "item", 		["image"] = "shitgpu.png", 				["unique"] = true, 		["useable"] = true, 	["shouldClose"] = true,   ["combinable"] = nil,   ["description"] = "Just look at it, what do you expect!"},
+["shitgpu"] 				    = {["name"] = "shitgpu", 			 	  	["label"] = "A trash gpu",            ["weight"] = 0, 		["type"] = "item", 		["image"] = "shitgpu.png", 				["unique"] = true, 		["useable"] = true, 	["shouldClose"] = true,   ["combinable"] = nil,   ["description"] = "Just look at it, what do you expect!"},
 
 	["1050gpu"] 				    = {["name"] = "1050gpu", 			 	  	["label"] = "gtx 1050",            ["weight"] = 0, 		["type"] = "item", 		["image"] = "1050.png", 				["unique"] = true, 		["useable"] = true, 	["shouldClose"] = true,   ["combinable"] = nil,   ["description"] = "It does the job for its price."},
 
@@ -46,8 +45,9 @@ We have created an crypto mining system for the qbcore framework. The overall id
 
 	["4090gpu"] 				    = {["name"] = "4090gpu", 			 	  	["label"] = "RTX 4090",            ["weight"] = 0, 		["type"] = "item", 		["image"] = "4090.png", 				["unique"] = true, 		["useable"] = true, 	["shouldClose"] = true,   ["combinable"] = nil,   ["description"] = "Is it just me or this looks kinda thicc?"},
 
-	["thermalpast"] 				    = {["name"] = "thermalpast", 			 	  	["label"] = "Thermal past",            ["weight"] = 0, 		["type"] = "item", 		["image"] = "thermalpast.png", 				["unique"] = true, 		["useable"] = true, 	["shouldClose"] = true,   ["combinable"] = nil,   ["description"] = "A thermalpast To keep your cpu chiling."},
+    ["5090gpu"] 				    = {["name"] = "5090gpu", 			 	  	["label"] = "RTX 5090",            ["weight"] = 0, 		["type"] = "item", 		["image"] = "5090.png", 				["unique"] = true, 		["useable"] = true, 	["shouldClose"] = true,   ["combinable"] = nil,   ["description"] = "Is this what I think it is?"},
 
+	["thermalpaste"] 				    = {["name"] = "thermalpaste", 			 	  	["label"] = "Thermal paste",            ["weight"] = 0, 		["type"] = "item", 		["image"] = "thermalpast.png", 				["unique"] = true, 		["useable"] = true, 	["shouldClose"] = true,   ["combinable"] = nil,   ["description"] = "A thermalpaste To keep your cpu cold."},
 ```
 
 # Dependencies
