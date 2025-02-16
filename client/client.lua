@@ -33,7 +33,7 @@ RegisterNetEvent('razed-cryptomining:client:CryptoMiningMenu', function()
                 title = 'Miner Status - 🟢',
                 description = 'Hover over this button to show the status of the miner.',
                 icon = 'question',
-                image = 'https://i.imgur.com/KiBDJuX.png'
+                image = 'https://files.catbox.moe/d7r1x0.png'
             },
             {
                 title = 'Go Back',
@@ -71,14 +71,14 @@ RegisterNetEvent('razed-cryptomining:client:CryptoMiningMenu', function()
                 title = 'Miner Status - 🔴',
                 description = 'Hover over this button to show the status of the miner.',
                 icon = 'question',
-                image = 'https://i.imgur.com/RWNejJy.png'
+                image = 'https://files.catbox.moe/q3iz9v.png'
             },
             {
                 title = 'Withdraw',
                 description = 'Withdraw your crypto: '..Config.CryptoWithdrawalFeeShown.. '% Fee',
                 icon = 'dollar',
                 serverEvent = 'razed-cryptomining:server:withdrawcrypto',
-                image = 'https://i.imgur.com/UJGPHfe.png'
+                image = 'https://files.catbox.moe/8wh7y4.png'
             },
             {
                 title = 'Go Back',
@@ -157,59 +157,67 @@ RegisterNetEvent('razed-cryptomining:client:UpgradeCryptoMining', function()
             },
             {
                 title = 'GTX 480',
-                description = 'The default gpu... We will just say its a classic...',
+                description = 'The default gpu. Lets just say its a classic...',
                 icon = 'fa-solid fa-question',
                 event = 'razed-cryptomining:client:useGTX480',
-                image = 'https://i.imgur.com/UFEWLG0.png',
+                image = 'https://files.catbox.moe/ivxw2a.png',
                 disabled = CheckGTX480()
             },
             {
                 title = 'GTX 1050',
-                description = 'The second gpu. It is alright, but still quite slow.',
+                description = 'The 1050. It is alright, but very slow.',
                 icon = 'fa-solid fa-1',
                 event = 'razed-cryptomining:client:useGTX1050',
-                image = 'https://i.imgur.com/Gyml2VP.png',
+                image = 'https://files.catbox.moe/rojnv7.png',
                 disabled = CheckGTX1050()
             },
             {
                 title = 'GTX 1060',
-                description = 'The third gpu. Its +10 from the last so it has to be good right?',
+                description = 'The 1060. Are we stil in 2018?',
                 icon = 'fa-solid fa-2',
                 event = 'razed-cryptomining:client:useGTX1060',
-                image = 'https://i.imgur.com/O10IWVC.png',
+                image = 'https://files.catbox.moe/xd2c5j.png',
                 disabled = CheckGTX1060()
             },
             {
                 title = 'GTX 1080',
-                description = 'The fourth best gpu. An absolute classic!',
+                description = 'An absolute classic!',
                 icon = 'fa-solid fa-3',
                 event = 'razed-cryptomining:client:useGTX1080',
-                image = 'https://i.imgur.com/gwQzyHX.png',
+                image = 'https://files.catbox.moe/y58jcq.png',
                 disabled = CheckGTX1080()
             },
             {
                 title = 'RTX 2080',
-                description = 'The 3nd best gpu. Was good a few years ago, but still great.',
+                description = 'The first raytracing flagship.',
                 icon = 'fa-solid fa-4',
                 event = 'razed-cryptomining:client:useRTX2080',
-                image = 'https://i.imgur.com/qJ376Ca.png',
+                image = 'https://files.catbox.moe/6ygah8.png',
                 disabled = CheckRTX2080()
             },
             {
                 title = 'RTX 3060',
-                description = 'The 2nd best gpu. The best gpu for price to preformance, but still not the best.',
+                description = 'Was the best gpu for price to preformance, but it is pretty slow now-a-days.',
                 icon = 'fa-solid fa-5',
                 event = 'razed-cryptomining:client:useRTX3060',
-                image = 'https://i.imgur.com/OtquIm1.png',
+                image = 'https://files.catbox.moe/ugf1ir.png',
                 disabled = CheckRTX3060()
             },
             {
                 title = 'RTX 4090',
-                description = 'The best of the best. An absolute tank, no need for another upgrade.',
+                description = 'An absolute beast of a card, will you really need to upgrade it?',
                 icon = 'fa-solid fa-6',
                 event = 'razed-cryptomining:client:useRTX4090',
-                image = 'https://i.imgur.com/fM9V5jn.png',
+                image = 'https://files.catbox.moe/4bjhmx.png',
                 disabled = CheckRTX4090()
+            },
+            {
+                title = 'RTX 5090',
+                description = 'The best of the best. An absolute tank, no need for another upgrade.',
+                icon = 'fa-solid fa-7',
+                event = 'razed-cryptomining:client:useRTX5090',
+                image = 'https://files.catbox.moe/p5odzm.png',
+                disabled = CheckRTX5090()
             }
       }}
     )
