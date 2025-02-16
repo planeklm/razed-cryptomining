@@ -4,7 +4,7 @@
 We have created an crypto mining system for the qbcore framework. The overall idea for this script is that I have yet to find a free crypto miner which functions. Thank you to everybody who contributed to this project, I am very proud of what we have created!
 
 # Features
-* **8 graphics card upgrades** - If your players are needing an upgrade, they can choose 7 different tiers of graphics cards, from the GTS 480 to the RTS 4090.
+* **8 graphics card upgrades** - If your players are needing an upgrade, they can choose 7 different tiers of graphics cards, from the GTS 480 to the RTS 5090.
 * **Withdraw crypto with a set fee** - When the coins are withdrew, you can set a fee (default 10%).
 *  **Crypto miner in houses** - With different housing scripts, you can place down the server rack prop to use the miner.
 * **Lightweight and optimized** - We've tried to make the most lightweight and optimized script, this means it can run on virtually any server without sacrificing preformance.
