@@ -306,27 +306,24 @@ end)
 
 CreateThread(function()
     if Config.Target == 'qb' then
-    exports['qb-target']:AddTargetModel(CryptoMinerProp, {
-        options = {
-            { 
-                icon = "fa-brands fa-bitcoin",
-                label = "Open Crypto Miner Menu",
-                event = "razed-cryptomining:client:CheckIfOwnedCrypto"
+        exports['qb-target']:AddTargetModel(CryptoMinerProp, {
+            options = {
+                { 
+                    icon = "fa-brands fa-bitcoin",
+                    label = "Open Crypto Miner Menu",
+                    event = "razed-cryptomining:client:CheckIfOwnedCrypto"
+                },
             },
-          },
-          distance = 3.0,
-    })
-else if Config.Target == 'ox' then
-    exports.ox_target:addModel(CryptoMinerProp, {
-        options = {
+            distance = 3.0,
+        })
+    elseif Config.Target == 'ox' then
+        exports.ox_target:addModel(CryptoMinerProp, {
             {
                 icon = "fa-brands fa-bitcoin",
                 label = "Open Crypto Miner Menu",
-                event = "razed-cryptomining:client:CheckIfOwnedCrypto"
-            },
-        },
-        distance = 3.0,
-    })
+                event = "razed-cryptomining:client:CheckIfOwnedCrypto",
+                distance = 3.0,
+            }
+        })
     end
-  end
 end)
