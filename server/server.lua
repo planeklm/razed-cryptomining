@@ -1,6 +1,7 @@
 local QBCore = exports['qb-core']:GetCoreObject()
-local CryptoBalance = 0.0
-local MinerStatus = false
+-- Per-player mining state. Replaces the global CryptoBalance/MinerStatus which
+-- let any player read and write the balance of every miner on the server.
+local Miners = {}
 local defaultCard = 'shitgpu'
 
 local function getData(citizenid)
@@ -9,7 +10,7 @@ local function getData(citizenid)
 end
 
 local function getGPU(citizenid, card)
-    local dataGPU = MySQL.Sync.prepare('SELECT * FROM cryptominers where card = ?', { card })
+    local dataGPU = MySQL.Sync.prepare('SELECT * FROM cryptominers where card = ? and citizenid = ?', { card, citizenid })
     local dataCitizen = MySQL.Sync.prepare('SELECT * FROM cryptominers where citizenid = ?', { citizenid })
     return dataGPU, dataCitizen
 end
@@ -17,6 +18,15 @@ end
 RegisterNetEvent('razed-cryptomining:server:buyCryptoMiner', function()
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
+    if not Player then return end
+    if getData(Player.PlayerData.citizenid) then
+        TriggerClientEvent("ox_lib:notify", src, {
+            title = 'Already Owned',
+            description = 'You already own a crypto miner.',
+            type = 'error'
+        })
+        return
+    end
     local notif1 = {
         title = 'Payment Success',
         description = 'You have successfully purcashed the crypto miner in cash.',
@@ -38,14 +48,14 @@ RegisterNetEvent('razed-cryptomining:server:buyCryptoMiner', function()
         TriggerClientEvent('razed-cryptomining:client:sendMail', src)
         Player.Functions.RemoveMoney('cash', Config.Price['Stage 1'], "Bought Stage 1 Crypto Miner")
         local id = MySQL.insert('INSERT INTO `cryptominers` (citizenid, card, balance) VALUES (?, ?, ?)',
-            { Player.PlayerData.citizenid, defaultCard, CryptoBalance })
+            { Player.PlayerData.citizenid, defaultCard, 0.0 })
         TriggerClientEvent('razed-cryptomining:client:addinfo', src, getData(Player.PlayerData.citizenid))
     elseif Player.PlayerData.money.bank >= Config.Price['Stage 1'] then
         TriggerClientEvent("ox_lib:notify", src, notif1)
         TriggerClientEvent('razed-cryptomining:client:sendMail', src)
         Player.Functions.RemoveMoney('bank', Config.Price['Stage 1'], "Bought Stage 1 Crypto Miner")
         local id = MySQL.insert('INSERT INTO `cryptominers` (citizenid, card, balance) VALUES (?, ?, ?)',
-            { Player.PlayerData.citizenid, defaultCard, CryptoBalance })
+            { Player.PlayerData.citizenid, defaultCard, 0.0 })
         TriggerClientEvent('razed-cryptomining:client:addinfo', src, getData(Player.PlayerData.citizenid))
     else
         TriggerClientEvent("ox_lib:notify", src, notif3)
@@ -129,11 +139,14 @@ RegisterNetEvent('razed-cryptomining:server:withdrawcrypto', function()
 end)
 
 RegisterNetEvent('razed-cryptomining:server:switch', function(switchStatus)
-    MinerStatus = switchStatus
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    if not Player then return end
+    Miners[src] = switchStatus and true or false
 end)
 
 AddEventHandler('playerDropped', function()
-    MinerStatus = false
+    Miners[source] = nil
 end)
 
 QBCore.Functions.CreateCallback('razed-cryptomining:server:showGPU', function(source, cb)
@@ -216,14 +229,28 @@ QBCore.Functions.CreateCallback('razed-cryptomining:server:checkGPUImage', funct
     cb(image)
 end)
 
+local validGPUs = {
+    ['shitgpu'] = true,
+    ['1050gpu'] = true,
+    ['1060gpu'] = true,
+    ['1080gpu'] = true,
+    ['2080gpu'] = true,
+    ['3060gpu'] = true,
+    ['4090gpu'] = true,
+    ['5090gpu'] = true,
+}
+
 RegisterNetEvent('razed-cryptomining:server:sendGPUDatabase', function(gpu)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
-    local PlayerCitizenID = Player.PlayerData.citizenid
+    if not Player then return end
 
-    if gpu == nil then
+    if gpu == nil or not validGPUs[gpu] then
         print('Attempted!')
+        return
     else
+        local hasItem = Player.Functions.GetItemByName(gpu)
+        if not hasItem or hasItem.count < 1 then return end
         local id = MySQL.update.await('UPDATE cryptominers SET card = ? WHERE citizenid = ?', {
             gpu, Player.PlayerData.citizenid
         })
@@ -241,184 +268,112 @@ RegisterNetEvent('razed-cryptomining:server:miningSystem', function()
         if getGPU(PlayerCitizenID, 'shitgpu') then
             while true do
                 Wait(1000)
-                while MinerStatus do
+                while Miners[src] do
                     Wait(math.random(15000, 50000))
-                    if MinerStatus == false then
-                        break
-                    else
-                        if MinerStatus == true then
-                            CryptoBalance = CryptoBalance + math.random(1, 3) / 10
-                            local id = MySQL.update.await('UPDATE cryptominers SET balance = ? WHERE citizenid = ?', {
-                                CryptoBalance, Player.PlayerData.citizenid
-                            })
-                            Wait(math.random(2500, 10000))
-                            if false then
-                                break
-                            end
-                        end
-                    end
+                    if not Miners[src] then break end
+                    MySQL.update.await('UPDATE cryptominers SET balance = balance + ? WHERE citizenid = ?', {
+                        math.random(1, 3) / 10, PlayerCitizenID
+                    })
+                    Wait(math.random(2500, 10000))
                 end
             end
         else
             if getGPU(PlayerCitizenID, '1050gpu') then
                 while true do
                     Wait(1000)
-                    while MinerStatus do
+                    while Miners[src] do
                         Wait(math.random(12500, 40000))
-                        if MinerStatus == false then
-                            break
-                        else
-                            if MinerStatus == true then
-                                CryptoBalance = CryptoBalance + math.random(2, 6) / 10
-                                local id = MySQL.update.await('UPDATE cryptominers SET balance = ? WHERE citizenid = ?',
-                                    {
-                                        CryptoBalance, Player.PlayerData.citizenid
-                                    })
-                                Wait(math.random(1500, 8000))
-                                if false then
-                                    break
-                                end
-                            end
-                        end
+                        if not Miners[src] then break end
+                        MySQL.update.await('UPDATE cryptominers SET balance = balance + ? WHERE citizenid = ?',
+                            {
+                                math.random(2, 6) / 10, PlayerCitizenID
+                            })
+                        Wait(math.random(1500, 8000))
                     end
                 end
             else
                 if getGPU(PlayerCitizenID, '1060gpu') then
                     while true do
                         Wait(1000)
-                        while MinerStatus do
+                        while Miners[src] do
                             Wait(math.random(10000, 35000))
-                            if MinerStatus == false then
-                                break
-                            else
-                                if MinerStatus == true then
-                                    CryptoBalance = CryptoBalance + math.random(3, 7) / 10
-                                    local id = MySQL.update.await(
-                                        'UPDATE cryptominers SET balance = ? WHERE citizenid = ?', {
-                                            CryptoBalance, Player.PlayerData.citizenid
-                                        })
-                                    Wait(math.random(1500, 8000))
-                                    if false then
-                                        break
-                                    end
-                                end
-                            end
+                            if not Miners[src] then break end
+                            MySQL.update.await(
+                                'UPDATE cryptominers SET balance = balance + ? WHERE citizenid = ?', {
+                                    math.random(3, 7) / 10, PlayerCitizenID
+                                })
+                            Wait(math.random(1500, 8000))
                         end
                     end
                 else
                     if getGPU(PlayerCitizenID, '1080gpu') then
                         while true do
                             Wait(1000)
-                            while MinerStatus do
+                            while Miners[src] do
                                 Wait(math.random(8000, 30000))
-                                if MinerStatus == false then
-                                    break
-                                else
-                                    if MinerStatus == true then
-                                        CryptoBalance = CryptoBalance + math.random(5, 10) / 10
-                                        local id = MySQL.update.await(
-                                            'UPDATE cryptominers SET balance = ? WHERE citizenid = ?', {
-                                                CryptoBalance, Player.PlayerData.citizenid
-                                            })
-                                        Wait(math.random(1000, 6500))
-                                        if false then
-                                            break
-                                        end
-                                    end
-                                end
+                                if not Miners[src] then break end
+                                MySQL.update.await(
+                                    'UPDATE cryptominers SET balance = balance + ? WHERE citizenid = ?', {
+                                        math.random(5, 10) / 10, PlayerCitizenID
+                                    })
+                                Wait(math.random(1000, 6500))
                             end
                         end
                     else
                         if getGPU(PlayerCitizenID, '2080gpu') then
                             while true do
                                 Wait(1000)
-                                while MinerStatus do
+                                while Miners[src] do
                                     Wait(math.random(7500, 27500))
-                                    if MinerStatus == false then
-                                        break
-                                    else
-                                        if MinerStatus == true then
-                                            CryptoBalance = CryptoBalance + math.random(7, 11) / 10
-                                            local id = MySQL.update.await(
-                                                'UPDATE cryptominers SET balance = ? WHERE citizenid = ?', {
-                                                    CryptoBalance, Player.PlayerData.citizenid
-                                                })
-                                            Wait(math.random(800, 4500))
-                                            if false then
-                                                break
-                                            end
-                                        end
-                                    end
+                                    if not Miners[src] then break end
+                                    MySQL.update.await(
+                                        'UPDATE cryptominers SET balance = balance + ? WHERE citizenid = ?', {
+                                            math.random(7, 11) / 10, PlayerCitizenID
+                                        })
+                                    Wait(math.random(800, 4500))
                                 end
                             end
                         else
                             if getGPU(PlayerCitizenID, '3060gpu') then
                                 while true do
                                     Wait(1000)
-                                    while MinerStatus do
+                                    while Miners[src] do
                                         Wait(math.random(5500, 20500))
-                                        if MinerStatus == false then
-                                            break
-                                        else
-                                            if MinerStatus == true then
-                                                CryptoBalance = CryptoBalance + math.random(10, 15) / 10
-                                                local id = MySQL.update.await(
-                                                    'UPDATE cryptominers SET balance = ? WHERE citizenid = ?', {
-                                                        CryptoBalance, Player.PlayerData.citizenid
-                                                    })
-                                                Wait(math.random(600, 2500))
-                                                if false then
-                                                    break
-                                                end
-                                            end
-                                        end
+                                        if not Miners[src] then break end
+                                        MySQL.update.await(
+                                            'UPDATE cryptominers SET balance = balance + ? WHERE citizenid = ?', {
+                                                math.random(10, 15) / 10, PlayerCitizenID
+                                            })
+                                        Wait(math.random(600, 2500))
                                     end
                                 end
                             else
                                 if getGPU(PlayerCitizenID, '4090gpu') then
                                     while true do
                                         Wait(1000)
-                                        while MinerStatus do
+                                        while Miners[src] do
                                             Wait(math.random(2500, 18500))
-                                            if MinerStatus == false then
-                                                break
-                                            else
-                                                if MinerStatus == true then
-                                                    CryptoBalance = CryptoBalance + math.random(20, 40) / 8
-                                                    local id = MySQL.update.await(
-                                                        'UPDATE cryptominers SET balance = ? WHERE citizenid = ?', {
-                                                            CryptoBalance, Player.PlayerData.citizenid
-                                                        })
-                                                    Wait(math.random(300, 1500))
-                                                    if false then
-                                                        break
-                                                    end
-                                                end
-                                            end
+                                            if not Miners[src] then break end
+                                            MySQL.update.await(
+                                                'UPDATE cryptominers SET balance = balance + ? WHERE citizenid = ?', {
+                                                    math.random(20, 40) / 8, PlayerCitizenID
+                                                })
+                                            Wait(math.random(300, 1500))
                                         end
                                     end
                                 end
                                 if getGPU(PlayerCitizenID, '5090gpu') then
                                     while true do
                                         Wait(1000)
-                                        while MinerStatus do
-                                            Wait(math.random(1750, 16000))
-                                            if MinerStatus == false then
-                                                break
-                                            else
-                                                if MinerStatus == true then
-                                                    CryptoBalance = CryptoBalance + math.random(25, 50) / 6
-                                                    local id = MySQL.update.await(
-                                                        'UPDATE cryptominers SET balance = ? WHERE citizenid = ?', {
-                                                            CryptoBalance, Player.PlayerData.citizenid
-                                                        })
-                                                    Wait(math.random(200, 1250))
-                                                    if false then
-                                                        break
-                                                    end
-                                                end
+                                            while Miners[src] do
+                                                Wait(math.random(1750, 16000))
+                                                if not Miners[src] then break end
+                                                MySQL.update.await(
+                                                    'UPDATE cryptominers SET balance = balance + ? WHERE citizenid = ?', {
+                                                        math.random(25, 50) / 6, PlayerCitizenID
+                                                    })
+                                                Wait(math.random(200, 1250))
                                             end
-                                        end
                                     end
                                 end
                             end
