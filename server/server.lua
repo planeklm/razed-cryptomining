@@ -44,9 +44,9 @@ RegisterNetEvent('razed-cryptomining:server:buyCryptoMiner', function()
     }
 
     if Player.PlayerData.money.cash >= Config.Price['Stage 1'] then
+        if not Player.Functions.RemoveMoney('cash', Config.Price['Stage 1'], "Bought Stage 1 Crypto Miner") then return end
         TriggerClientEvent("ox_lib:notify", src, notif1)
         TriggerClientEvent('razed-cryptomining:client:sendMail', src)
-        Player.Functions.RemoveMoney('cash', Config.Price['Stage 1'], "Bought Stage 1 Crypto Miner")
         local id = MySQL.insert('INSERT INTO `cryptominers` (citizenid, card, balance) VALUES (?, ?, ?)',
             { Player.PlayerData.citizenid, defaultCard, 0.0 })
         TriggerClientEvent('razed-cryptomining:client:addinfo', src, getData(Player.PlayerData.citizenid))
@@ -143,10 +143,14 @@ RegisterNetEvent('razed-cryptomining:server:switch', function(switchStatus)
     local Player = QBCore.Functions.GetPlayer(src)
     if not Player then return end
     Miners[src] = switchStatus and true or false
+    if not switchStatus then
+        miningThreads[src] = nil -- allow the thread to be started again next toggle
+    end
 end)
 
 AddEventHandler('playerDropped', function()
     Miners[source] = nil
+    miningThreads[source] = nil
 end)
 
 QBCore.Functions.CreateCallback('razed-cryptomining:server:showGPU', function(source, cb)
@@ -259,10 +263,17 @@ RegisterNetEvent('razed-cryptomining:server:sendGPUDatabase', function(gpu)
     end
 end)
 
+-- One earnings thread per player; prevents toggle-spam from spawning
+-- parallel mining loops (each net event call previously started a new loop).
+local miningThreads = {}
+
 RegisterNetEvent('razed-cryptomining:server:miningSystem', function()
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
+    if not Player then return end
     local PlayerCitizenID = Player.PlayerData.citizenid
+    if miningThreads[src] then return end -- already mining
+    miningThreads[src] = true
 
     CreateThread(function()
         if getGPU(PlayerCitizenID, 'shitgpu') then
